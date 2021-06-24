@@ -1,43 +1,41 @@
 import { spawn } from "child_process"
-import fs from "fs"
+import { v4 as uuid } from 'uuid'
+import { promises as fs } from "fs"
 
-const runPython = async (script: string) => {
-  fs.writeFile("test.py", script, (err) => {
-    if (err) console.log(err)
-  })
+export const runPython = async (script: string) => {
+  const filename = uuid()
+  
+  try {
+    await fs.writeFile(`programs/${filename}.py`, script)
+  } catch (e) {
+    console.error(e)
+  }
 
-  const PyProg = spawn("python", ["test.py"])
-  let ret = ""
-  PyProg.stdout.on("data", (data) => {
-    console.log("this is data", data.toString())
-    ret = data
-  })
+  const PyProg = spawn("python", [`programs/${filename}.py`])
 
-  return ret
-  // const PyProg = spawn("python", ["-c", `'${script}'`]);
+  return new Promise<string>((resolve, reject) => {
+    let output = ""
 
-  // return new Promise<string>((resolve, reject) => {
-  //   PyProg.stdout.on("data", (data) => {
-  //     console.log(data.toString());
-  //     resolve(data);
-  //   });
+    PyProg.stdout.on("data", (data) => {
+      output += data
+    });
 
-  //   PyProg.stderr.on("data", (data) => {
-  //     resolve(data);
-  //   });
-
-  //   PyProg.on("close", (code) => {
-  //     resolve("exit code: " + code.toString());
-  //   });
-  // });
+    PyProg.on("close", (code) => {
+      if (code != 0) {
+        reject()
+      } else {
+        console.log(output)
+        resolve(output)
+      }
+    });
+  });
 }
 
-const runCPP = () => {
+export const runCPP = () => {
   //https://stackoverflow.com/questions/49100336/run-c-c-code-from-nodejs
 }
 
-const runJava = () => {
+export const runJava = () => {
   //https://stackoverflow.com/questions/29242529/node-js-run-a-java-program
 }
 
-export { runPython, runCPP, runJava }
