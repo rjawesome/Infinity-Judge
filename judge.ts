@@ -32,4 +32,12 @@ const runPython = async (script: string) => {
   // });
 }
 
-export { runPython }
+const runCPP = () => {
+  //https://stackoverflow.com/questions/49100336/run-c-c-code-from-nodejs
+}
+
+const runJava = () => {
+  //https://stackoverflow.com/questions/29242529/node-js-run-a-java-program
+}
+
+export { runPython, runCPP, runJava }
