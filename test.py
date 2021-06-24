@@ -1,1 +1,1 @@
-print("python works")
+print(123)
