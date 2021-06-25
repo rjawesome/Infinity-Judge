@@ -7,15 +7,20 @@ function runCommand (cmd: string, options: string[], stdin?: string) {
 
   return new Promise<string>((resolve, reject) => {
     let output = ""
+    let err = ""
     if (stdin) process.stdin.end(stdin)
 
     process.stdout.on("data", (data) => {
       output += data
     })
+    
+    process.stderr.on("data", (data) => {
+      err += data
+    })
 
     process.on("close", (code) => {
       if (code != 0) {
-        reject()
+        reject(err)
       } else {
         console.log(output)
         resolve(output)
