@@ -7,9 +7,10 @@
   <title>Document</title>
 </head>
 <body>
+  <p><%= statement %></p>
   <form method="POST">
     <textarea required placeholder="your code" name="code"></textarea>
-    <textarea required placeholder="your input" name="input"></textarea>
+    <!-- <textarea required placeholder="your input" name="input"></textarea> -->
     <select required name="lang">
       <option value="cpp">C++</option>
       <option value="java" >Java</option>
@@ -17,8 +18,5 @@
     </select>
     <input type="submit" value="submit!">
   </form>
-  <% if (error) { %>
-   <p>Error: <%= error %> </p>
-  <% } %>
 </body>
 </html>

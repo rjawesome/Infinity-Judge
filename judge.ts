@@ -36,6 +36,22 @@ export const runPython = async (script: string, input: string) => {
   return runCommand("python3", [`programs/${filename}.py`], input)
 }
 
+export const compileCPP = async (script: string) => {
+  const filename = uuid()
+  try {
+    await fs.writeFile(`./programs/${filename}.cpp`, script)
+  } catch (e) {
+    console.error(e)
+  }
+
+  await runCommand('g++', ['-std=c++17',`./programs/${filename}.cpp`,'-o',`./programs/${filename}`])
+  return filename
+}
+
+export const runBinary = async (name: string, input: string) => {
+  return runCommand(`programs/${name}`, [], input)
+}
+
 export const runCPP = async (script: string, input: string) => {
   const filename = uuid()
   try {
