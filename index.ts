@@ -10,7 +10,7 @@ app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 app.set("view engine", "ejs")
-app.use(express.static(__dirname + "public"))
+app.use('/public', express.static('public'))
 
 app.get("/", async (req, res) => {
   let files = await fs.readdir("./problems")
