@@ -5,7 +5,7 @@ import { forEachChild } from "typescript"
 import { resolve } from "path/posix"
 
 export const runPython = async (script: string) => {
-  const filename = uuid()
+  const filename = "test"
 
   try {
     await fs.writeFile(`programs/${filename}.py`, script)
@@ -17,6 +17,7 @@ export const runPython = async (script: string) => {
 
   return new Promise<string>((resolve, reject) => {
     let output = ""
+    PyProg.stdin.end("some_python_input")
 
     PyProg.stdout.on("data", (data) => {
       output += data
@@ -57,6 +58,12 @@ export const runCPP = async (script: string) => {
   })
 }
 
-export const runJava = (code: string) => {
+export const runJava = async (script: string) => {
+  try {
+    await fs.writeFile("./programs/test.java", script)
+  } catch (e) {
+    console.error(e)
+  }
+
   //https://stackoverflow.com/questions/29242529/node-js-run-a-java-program
 }

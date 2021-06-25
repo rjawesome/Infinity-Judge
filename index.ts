@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", async (req, res) => {
-  const { code, lang } = req.body
+  const { code, lang, input } = req.body
   var result
   //console.log(code, lang)
   if (lang === "cpp") result = await runCPP(code)
