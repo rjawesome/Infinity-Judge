@@ -16,8 +16,8 @@ app.get("/", (req, res) => {
 
 app.post("/", async (req, res) => {
   const { code, lang } = req.body
-  var result: string
-  console.log(code, lang)
+  var result
+  //console.log(code, lang)
   if (lang === "cpp") result = await runCPP(code)
   if (lang === "py") result = await runPython(code)
   //if (lang == "java") result = await runJava(code)
