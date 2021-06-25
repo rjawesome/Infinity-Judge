@@ -2,7 +2,7 @@ import { spawn, exec } from "child_process"
 import { v4 as uuid } from "uuid"
 import { promises as fs } from "fs"
 
-function runCommand (cmd: string, options: string[], stdin?: string) {
+function runCommand(cmd: string, options: string[], stdin?: string) {
   const process = spawn(cmd, options)
 
   return new Promise<string>((resolve, reject) => {
@@ -13,7 +13,7 @@ function runCommand (cmd: string, options: string[], stdin?: string) {
     process.stdout.on("data", (data) => {
       output += data
     })
-    
+
     process.stderr.on("data", (data) => {
       err += data
     })
@@ -38,7 +38,7 @@ export const runPython = async (script: string, input: string) => {
     console.error(e)
   }
 
-  return runCommand("python3", [`programs/${filename}.py`], input)
+  return runCommand("python", [`programs/${filename}.py`], input)
 }
 
 export const compileCPP = async (script: string) => {
@@ -49,7 +49,12 @@ export const compileCPP = async (script: string) => {
     console.error(e)
   }
 
-  await runCommand('g++', ['-std=c++17',`./programs/${filename}.cpp`,'-o',`./programs/${filename}`])
+  await runCommand("g++", [
+    "-std=c++17",
+    `./programs/${filename}.cpp`,
+    "-o",
+    `./programs/${filename}`,
+  ])
   return filename
 }
 
@@ -65,7 +70,12 @@ export const runCPP = async (script: string, input: string) => {
     console.error(e)
   }
 
-  await runCommand('g++', ['-std=c++17',`./programs/${filename}.cpp`,'-o',`./programs/${filename}`])
+  await runCommand("g++", [
+    "-std=c++17",
+    `./programs/${filename}.cpp`,
+    "-o",
+    `./programs/${filename}`,
+  ])
 
   return runCommand(`programs/${filename}`, [], input)
 }
@@ -76,10 +86,8 @@ export const runJava = async (script: string) => {
   } catch (e) {
     console.error(e)
   }
-  
-  exec('java', (error, stdout, stderr) => {
-    
-  })
+
+  exec("java", (error, stdout, stderr) => {})
 
   //https://stackoverflow.com/questions/29242529/node-js-run-a-java-program
 }
