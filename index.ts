@@ -18,9 +18,9 @@ app.post("/", async (req, res) => {
   const { code, lang, input } = req.body
   var result
   //console.log(code, lang)
-  if (lang === "cpp") result = await runCPP(code)
-  if (lang === "py") result = await runPython(code)
-  //if (lang == "java") result = await runJava(code)
+  if (lang === "cpp") result = await runCPP(code, input)
+  if (lang === "py") result = await runPython(code, input)
+  //if (lang == "java") result = await runJava(code, input)
   res.send("result: " + result)
 })
 

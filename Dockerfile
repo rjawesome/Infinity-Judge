@@ -5,11 +5,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
 
-# Bundle app source
 COPY . .
 
-EXPOSE 8080
-CMD [ "node", "server.js" ]
+RUN apt-get install python3
+RUN apt-get install g++
+
+EXPOSE 10000
+CMD [ "npm", "run", "start" ]

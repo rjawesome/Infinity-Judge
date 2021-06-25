@@ -1,29 +1,19 @@
 import { spawn, exec } from "child_process"
 import { v4 as uuid } from "uuid"
 import { promises as fs } from "fs"
-import { forEachChild } from "typescript"
-import { resolve } from "path/posix"
 
-export const runPython = async (script: string) => {
-  const filename = "test"
-
-  try {
-    await fs.writeFile(`programs/${filename}.py`, script)
-  } catch (e) {
-    console.error(e)
-  }
-
-  const PyProg = spawn("python", [`programs/${filename}.py`])
+function runCommand (cmd: string, options: string[], stdin?: string) {
+  const process = spawn(cmd, options)
 
   return new Promise<string>((resolve, reject) => {
     let output = ""
-    PyProg.stdin.end("some_python_input")
+    if (stdin) process.stdin.end(stdin)
 
-    PyProg.stdout.on("data", (data) => {
+    process.stdout.on("data", (data) => {
       output += data
     })
 
-    PyProg.on("close", (code) => {
+    process.on("close", (code) => {
       if (code != 0) {
         reject()
       } else {
@@ -34,28 +24,29 @@ export const runPython = async (script: string) => {
   })
 }
 
-export const runCPP = async (script: string) => {
+export const runPython = async (script: string, input: string) => {
+  const filename = uuid()
+
   try {
-    await fs.writeFile("./programs/test.cpp", script)
+    await fs.writeFile(`programs/${filename}.py`, script)
   } catch (e) {
     console.error(e)
   }
 
-  return new Promise<string>((resolve, reject) => {
-    const CppProg = spawn("./programs/testcpp.exe")
-    let output = ""
+  return runCommand("python3", [`programs/${filename}.py`], input)
+}
 
-    CppProg.stdin.end("some_cpp_input")
-    CppProg.stdout.on("data", (data) => (output += data.toString()))
+export const runCPP = async (script: string, input: string) => {
+  const filename = uuid()
+  try {
+    await fs.writeFile(`./programs/${filename}.cpp`, script)
+  } catch (e) {
+    console.error(e)
+  }
 
-    CppProg.on("close", (code) => {
-      if (code != 0) reject()
-      else {
-        console.log(output)
-        resolve(output)
-      }
-    })
-  })
+  await runCommand('g++', ['-std=c++17',`./programs/${filename}.cpp`,'-o',`./programs/${filename}`])
+
+  return runCommand(`programs/${filename}`, [], input)
 }
 
 export const runJava = async (script: string) => {
@@ -64,6 +55,10 @@ export const runJava = async (script: string) => {
   } catch (e) {
     console.error(e)
   }
+  
+  exec('java', (error, stdout, stderr) => {
+    
+  })
 
   //https://stackoverflow.com/questions/29242529/node-js-run-a-java-program
 }
