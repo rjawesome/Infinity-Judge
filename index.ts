@@ -1,12 +1,12 @@
-import express, {RequestHandler} from "express"
+import express, { RequestHandler } from "express"
 import cors from "cors"
 import "ejs"
-import { runPython } from "./judge"
+import { runCPP, runJava, runPython } from "./judge"
 
 const app = express()
 
 app.use(express.json() as RequestHandler)
-app.use(express.urlencoded({extended: true}) as RequestHandler)
+app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 app.set("view engine", "ejs")
 
@@ -15,14 +15,13 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", async (req, res) => {
-  const { code } = req.body
-  console.log(code)
-  /*
-  res.render('result', {
-    res: await runPython(code)
-  })
-  */
-  res.send("result: " + (await runPython(code)))
+  const { code, lang } = req.body
+  var result: string
+  console.log(code, lang)
+  if (lang === "cpp") result = await runCPP(code)
+  if (lang === "py") result = await runPython(code)
+  //if (lang == "java") result = await runJava(code)
+  res.send("result: " + result)
 })
 
 app.listen(10000, () => console.log("server runing on 10000"))
