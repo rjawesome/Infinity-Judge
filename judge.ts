@@ -35,13 +35,13 @@ export const runPython = async (script: string) => {
 
 export const runCPP = async (script: string) => {
   try {
-    await fs.writeFile("test.cpp", script)
+    await fs.writeFile("./programs/test.cpp", script)
   } catch (e) {
     console.error(e)
   }
 
   return new Promise<string>((resolve, reject) => {
-    const CppProg = spawn("testcpp.exe")
+    const CppProg = spawn("./programs/testcpp.exe")
     let output = ""
 
     CppProg.stdin.end("some_cpp_input")
