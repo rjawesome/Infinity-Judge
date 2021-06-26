@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>Create Account</h1>
+      <form id="signup-form">
+        <label>Email </label>
+        <input type="text" id="signup-email" required />
+
+        <label>Password </label>
+        <input type="password" id="signup-password" required />
+
+        <input type="submit" value="Signup" />
+      </form>
+
+      <form id="login-form">
+        <label>Email </label>
+        <input type="text" id="login-email" required />
+
+        <label>Password </label>
+        <input type="password" id="login-password" required />
+
+        <input type="submit" value="Login" />
+      </form>
+
+      <button id="logout">logout</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyA-Wu88uS3A6NMzCrF5l3DloHHgaNi-aLA",
+        authDomain: "judge-9f4ba.firebaseapp.com",
+        projectId: "judge-9f4ba",
+        storageBucket: "judge-9f4ba.appspot.com",
+        messagingSenderId: "735452787743",
+        appId: "1:735452787743:web:a22b6f38a3ac4787e3512a",
+      }
+      firebase.initializeApp(firebaseConfig)
+
+      const auth = firebase.auth()
+      const db = firebase.firestore()
+    </script>
+    <script src="../firebase/index.js"></script>
+    <script src="../firebase/auth.js"></script>
+  </body>
+</html>
