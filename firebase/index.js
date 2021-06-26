@@ -1,11 +1,11 @@
 const problemList = document.querySelector("#probs")
 
 const setupProblems = async (problemData, userData) => {
-  var curUser, userProbList
+  var curUser = "",
+    userProbList = ""
   await auth.onAuthStateChanged((user) => (curUser = user))
 
   let html = ""
-  const data = userData
   userData.forEach((user) => {
     if (user.id === curUser.email) userProbList = user
   })
