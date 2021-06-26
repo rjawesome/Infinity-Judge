@@ -10,7 +10,7 @@ app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 app.set("view engine", "ejs")
-app.use('/public', express.static('public'))
+app.use("/public", express.static("public"))
 
 app.get("/", async (req, res) => {
   let files = await fs.readdir("./problems")
@@ -30,12 +30,19 @@ app.post("/:id", async (req, res) => {
 
   let fullResult = ""
   let tc_count = ((await fs.readdir(`problems/${id}/`)).length - 1) / 2
-  if (lang == "cpp") code = await compileCPP(code)
+  if (lang == "cpp") {
+    code = await compileCPP(code)
+    if (code[0] === ".") fullResult = "Compilation Error ------- " + code
+  }
 
   for (let i = 1; i <= tc_count; i++) {
+    if (fullResult[0] === "C") break
     const input = (await fs.readFile(`problems/${id}/t${i}.in`)).toString()
     const output = (await fs.readFile(`problems/${id}/t${i}.out`)).toString()
-    const result = await getResult(code, lang, input)
+    const result = await getResult(code, lang, input).catch((e) => {
+      fullResult = "Compilation Error ------ " + e
+    })
+    if (fullResult[0] === "C") break
     fullResult += result == output ? "AC " : "WA "
   }
 

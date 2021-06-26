@@ -13,7 +13,6 @@ function runCommand(cmd: string, options: string[], stdin?: string) {
     process.stdout.on("data", (data) => {
       output += data
     })
-
     process.stderr.on("data", (data) => {
       err += data
     })
@@ -31,11 +30,10 @@ function runCommand(cmd: string, options: string[], stdin?: string) {
 
 export const runPython = async (script: string, input: string) => {
   const filename = uuid()
-
   try {
     await fs.writeFile(`programs/${filename}.py`, script)
   } catch (e) {
-    console.error(e)
+    console.log(e)
   }
 
   return runCommand("python", [`programs/${filename}.py`], input)
@@ -46,15 +44,20 @@ export const compileCPP = async (script: string) => {
   try {
     await fs.writeFile(`./programs/${filename}.cpp`, script)
   } catch (e) {
-    console.error(e)
+    console.error("COMPILE ERROR", e)
   }
 
-  await runCommand("g++", [
-    "-std=c++17",
-    `./programs/${filename}.cpp`,
-    "-o",
-    `./programs/${filename}`,
-  ])
+  try {
+    await runCommand("g++", [
+      "-std=c++17",
+      `./programs/${filename}.cpp`,
+      "-o",
+      `./programs/${filename}`,
+    ])
+  } catch (e) {
+    console.log("COMPILE CPP ERROR HERE", e)
+    return e
+  }
   return filename
 }
 
