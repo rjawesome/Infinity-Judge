@@ -26,7 +26,7 @@ app.get("/:id", async (req, res) => {
   const { id } = req.params
   res.render("problem", {
     name: id,
-    statement: (await fs.readFile(`problems/${id}/statement.txt`)).toString()
+    statement: (await fs.readFile(`problems/${id}/statement.txt`)).toString(),
   })
 })
 

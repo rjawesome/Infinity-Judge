@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .navbar {
@@ -77,6 +77,11 @@ a {
 
 .white {
   color: white;
+}
+
+.bg-green {
+  background: #46db40;
+  opacity: 0.5;
 }
 
 .bold {

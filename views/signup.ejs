@@ -48,10 +48,13 @@
         messagingSenderId: "735452787743",
         appId: "1:735452787743:web:a22b6f38a3ac4787e3512a",
       }
-      firebase.initializeApp(firebaseConfig)
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig)
+      }
 
       const auth = firebase.auth()
       const db = firebase.firestore()
+      db.settings({ timestampsInSnapshots: true })
     </script>
     <script src="../firebase/index.js"></script>
     <script src="../firebase/auth.js"></script>

@@ -1,5 +1,19 @@
-auth.onAuthStateChange((user) => {
-  console.log(user)
+db.collection("problems")
+  .get()
+  .then((snapshot) => {
+    db.collection("profiles")
+      .get()
+      .then((snapshot2) => {
+        setupProblems(snapshot.docs, snapshot2.docs)
+      })
+  })
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    console.log("user logged in:", user.email)
+  } else {
+    console.log("user logged out")
+  }
 })
 
 const signupForm = document.querySelector("#signup-form")
@@ -17,9 +31,7 @@ signupForm.addEventListener("submit", (e) => {
 const logout = document.querySelector("#logout")
 logout.addEventListener("click", (e) => {
   e.preventDefault()
-  auth.signOut().then(() => {
-    console.log("user signed out")
-  })
+  auth.signOut()
 })
 
 const loginForm = document.querySelector("#login-form")
@@ -29,7 +41,6 @@ loginForm.addEventListener("submit", (e) => {
   const password = loginForm["login-password"].value
 
   auth.signInWithEmailAndPassword(email, password).then((cred) => {
-    console.log(cred.user)
     loginForm.reset()
   })
 })
