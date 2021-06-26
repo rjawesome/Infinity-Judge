@@ -7,11 +7,18 @@
     <link href="./public/styles.css"" rel="stylesheet" type="text/css">
     <title>Document</title>
   </head>
-  <body>
-    <% for(let i = 0; i < probs.length; i++){ %>
-    <div class="test">
-      <a href="<%=`/${probs[i]}`%>"><%= probs[i] %> </a>
+  <nav class="navbar">
+    <div class="links">
+      <a href="">link 1</a>
+      <a href="">link 2</a>
     </div>
+  </nav>
+  <body class="content">
+    <h1>Problem List</h1>
+    <% for(let i = 0; i < probs.length; i++){ %>
+    <a href="<%=`/${probs[i]}`%>">
+      <div class="problem-card"><%= probs[i] %></div>
+    </a>
     <% } %>
   </body>
 </html>

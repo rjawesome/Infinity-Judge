@@ -1,9 +1,105 @@
-.problem-card {
-  border: solid 1px black;
-  width: 100px;
-  height: 100px;
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Quicksand;
 }
 
-.test {
-  background-color: green;
+.navbar {
+  padding: 2px;
+  /* border: 1px black solid; */
+  float: right;
+  max-width: 50%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.navbar .links {
+  /* border: 1px black solid; */
+  margin-left: auto;
+}
+
+.navbar h1 {
+  color: blue;
+}
+
+.navbar a {
+  color: black;
+  text-decoration: none;
+  margin: 0px 15px 0px;
+}
+
+.navbar a:hover {
+  color: blue;
+}
+
+.content {
+  max-width: 50%;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.problem-card {
+  border: 1px black solid;
+  padding: 20px;
+  margin: 20px 20px 20px 0px;
+  font-size: 30px;
+}
+
+/* .problem-card {
+  text-decoration: none;
+} */
+
+a {
+  text-decoration: none;
+}
+
+.problem-card:hover {
+  box-shadow: 1px 3px 5px blue;
+}
+
+.problem-details h2 {
+  margin-bottom: 10px;
+}
+
+.problem-details div {
+  margin-top: 10px;
+}
+
+.black {
+  color: black;
+}
+
+.blue {
+  color: blue;
+}
+
+.white {
+  color: white;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.submit {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.submit .submit-form {
+  display: grid;
+  text-align: left;
+}
+
+.submit-form input,
+.submit-form textarea {
+  margin: 5px 10px 15px 0px;
+  padding: 6px 10px;
+}
+
+.submit button {
+  padding: 5px 10px;
+  background-color: #ff004c;
+  border-radius: 10px;
+  margin: 0 auto;
 }
