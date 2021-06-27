@@ -6,24 +6,24 @@ const setupProblems = async (problemData, userData) => {
   await auth.onAuthStateChanged((user) => (curUser = user))
 
   if (!curUser) {
-    const html = `<p>Please signup or login to view problems</p>`
-    problemList.innerHTML = html
+    problemList.innerHTML = `<p>Please signup or login to view problems</p>`
     return
   }
 
   let html = ""
   userData.forEach((user) => {
-    if (user.id === curUser.email) userProbList = user
+    if (user.data().email === curUser.email) userProbList = user
   })
 
   console.log(userProbList.data())
   userProbList = userProbList.data()
 
   problemData.forEach((doc) => {
-    const color = userProbList[doc.id] === "solved" ? "bg-green" : ""
-    console.log("color for ", doc.id, "is ", color)
+    doc = doc.data()
+    const color = userProbList[doc.name] === "solved" ? "bg-green" : ""
+    console.log("color for ", doc.name, "is ", color)
     const a = `
-    <a href="/${doc.id}"><div class="problem-card ${color}">${doc.id}</div></a>
+    <a href="/${doc.name}"><div class="problem-card ${color}">${doc.name}</div></a>
     `
     html += a
   })

@@ -22,6 +22,10 @@ app.get("/signup", async (req, res) => {
   res.render("signup")
 })
 
+app.get("/admin", async (req, res) => {
+  res.render("admin")
+})
+
 app.get("/:id", async (req, res) => {
   const { id } = req.params
   res.render("problem", {
