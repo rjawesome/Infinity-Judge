@@ -5,6 +5,12 @@ const setupProblems = async (problemData, userData) => {
     userProbList = ""
   await auth.onAuthStateChanged((user) => (curUser = user))
 
+  if (!curUser) {
+    const html = `<p>Please signup or login to view problems</p>`
+    problemList.innerHTML = html
+    return
+  }
+
   let html = ""
   userData.forEach((user) => {
     if (user.id === curUser.email) userProbList = user
