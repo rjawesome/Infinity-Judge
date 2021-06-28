@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar {
+  padding: 2px;
+  /* border: 1px black solid; */
+  float: right;
+  max-width: 50%;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.navbar .links {
+  /* border: 1px black solid; */
+  margin-left: auto;
+}
+
+.navbar h1 {
+  color: blue;
+}
+
+.navbar a {
+  color: black;
+  text-decoration: none;
+  margin: 0px 15px 0px;
+}
+
+.navbar a:hover {
+  color: blue;
+}
+
+.content {
+  max-width: 50%;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.problem-card {
+  border: 1px black solid;
+  padding: 20px;
+  margin: 20px 20px 20px 0px;
+  font-size: 30px;
+}
+
+/* .problem-card {
+  text-decoration: none;
+} */
+
+a {
+  text-decoration: none;
+}
+
+.problem-card:hover {
+  box-shadow: 1px 3px 5px blue;
+}
+
+.problem-details h2 {
+  margin-bottom: 10px;
+}
+
+.problem-details div {
+  margin-top: 10px;
+}
+
+.black {
+  color: black;
+}
+
+.blue {
+  color: blue;
+}
+
+.white {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.bg-green {
+  background: #46db40;
+  opacity: 0.5;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bold {
+  font-weight: bold;
+}
+
+.submit {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.submit .submit-form {
+  display: grid;
+  text-align: left;
+}
+
+.submit-form input,
+.submit-form textarea {
+  margin: 5px 10px 15px 0px;
+  padding: 6px 10px;
+}
+
+.submit button {
+  padding: 5px 10px;
+  background-color: #ff004c;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+.statement {
+  margin: 20px 20px 20px 0px;
 }
