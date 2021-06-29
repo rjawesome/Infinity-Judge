@@ -9,6 +9,21 @@ app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 
+app.get("/", async (req, res) => {
+  const files = await fs.readdir("problems")
+  //console.log(files)
+  res.json(files)
+})
+
+app.get("/:id", async (req, res) => {
+  const { id } = req.params
+  const statement = await (
+    await fs.readFile(`problems/${id}/statement.txt`)
+  ).toString()
+  console.log("ayo", statement)
+  res.json(statement)
+})
+
 app.post("/:id", async (req, res) => {
   let { code, lang } = req.body as { code: string; lang: string }
   const { id } = req.params as { id: string }
@@ -31,7 +46,7 @@ app.post("/:id", async (req, res) => {
     fullResult += result == output ? "AC " : "WA "
   }
 
-  res.render("result", { res: fullResult })
+  res.json({ res: fullResult })
 })
 
 async function getResult(code: string, lang: string, input: string) {
