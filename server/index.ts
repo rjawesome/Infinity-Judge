@@ -20,17 +20,16 @@ app.get("/:id", async (req, res) => {
   const statement = await (
     await fs.readFile(`problems/${id}/statement.txt`)
   ).toString()
-  console.log("ayo", statement)
   res.json(statement)
 })
 
-app.post("/:id", async (req, res) => {
+app.post("/submit/:id", async (req, res) => {
   let { code, lang } = req.body as { code: string; lang: string }
   const { id } = req.params as { id: string }
 
   let fullResult = ""
   let tc_count = ((await fs.readdir(`problems/${id}/`)).length - 1) / 2
-  if (lang == "cpp") {
+  if (lang === "cpp") {
     code = await compileCPP(code)
     if (code[0] === ".") fullResult = "Compilation Error ------- " + code
   }
@@ -46,7 +45,7 @@ app.post("/:id", async (req, res) => {
     fullResult += result == output ? "AC " : "WA "
   }
 
-  res.json({ res: fullResult })
+  res.json(fullResult)
 })
 
 async function getResult(code: string, lang: string, input: string) {

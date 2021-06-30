@@ -21,7 +21,7 @@ function runCommand(cmd: string, options: string[], stdin?: string) {
       if (code != 0) {
         reject(err)
       } else {
-        console.log(output)
+        //console.log(output)
         resolve(output)
       }
     })
@@ -44,7 +44,7 @@ export const compileCPP = async (script: string) => {
   try {
     await fs.writeFile(`./programs/${filename}.cpp`, script)
   } catch (e) {
-    console.error("COMPILE ERROR", e)
+    console.log("COMPILE ERROR", e)
   }
 
   try {
@@ -55,7 +55,7 @@ export const compileCPP = async (script: string) => {
       `./programs/${filename}`,
     ])
   } catch (e) {
-    console.log("COMPILE CPP ERROR HERE", e)
+    //console.log("COMPILE CPP ERROR HERE", e)
     return e
   }
   return filename
