@@ -1,4 +1,4 @@
-const Result = ({ result }) => {
+const Result = ({ result }: { result: string }) => {
   return (
     <div>
       <h1>Your Result:</h1>

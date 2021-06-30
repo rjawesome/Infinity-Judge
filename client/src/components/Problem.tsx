@@ -3,13 +3,17 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import Result from "./Result"
 
+interface ParamType {
+  id: string
+}
+
 const Problem = () => {
-  const [statement, setStatement] = useState()
-  const [code, setCode] = useState()
+  const [statement, setStatement] = useState("")
+  const [code, setCode] = useState("")
   const [lang, setLang] = useState("cpp")
   const [submission, setSubmission] = useState(false)
-  const [result, setResult] = useState()
-  const { id } = useParams()
+  const [result, setResult] = useState("")
+  const { id } = useParams<ParamType>()
   //console.log("this the id", id)
 
   useEffect(() => {
@@ -18,7 +22,7 @@ const Problem = () => {
       .then(({ data }) => setStatement(data))
   })
 
-  const problemSubmit = (e) => {
+  const problemSubmit = (e: any) => {
     e.preventDefault()
     setSubmission(true)
     console.log(code, lang)
@@ -41,7 +45,6 @@ const Problem = () => {
                 required
                 placeholder="your code"
                 name="code"
-                type="text"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
               ></textarea>
