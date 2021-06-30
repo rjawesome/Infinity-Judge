@@ -1,33 +1,33 @@
-import { useParams } from "react-router";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Result from "./Result";
+import { useParams } from "react-router"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import Result from "./Result"
 
 const Problem = () => {
-  const [statement, setStatement] = useState();
-  const [code, setCode] = useState();
-  const [lang, setLang] = useState("cpp");
-  const [submission, setSubmission] = useState(false);
-  const [result, setResult] = useState();
-  const { id } = useParams();
+  const [statement, setStatement] = useState()
+  const [code, setCode] = useState()
+  const [lang, setLang] = useState("cpp")
+  const [submission, setSubmission] = useState(false)
+  const [result, setResult] = useState()
+  const { id } = useParams()
   //console.log("this the id", id)
 
   useEffect(() => {
     axios
       .get(`http://localhost:10000/${id}`)
-      .then(({ data }) => setStatement(data));
-  });
+      .then(({ data }) => setStatement(data))
+  })
 
   const problemSubmit = (e) => {
-    e.preventDefault();
-    setSubmission(true);
-    console.log(code, lang);
+    e.preventDefault()
+    setSubmission(true)
+    console.log(code, lang)
     axios
       .post(`http://localhost:10000/submit/${id}`, { code, lang })
       .then(({ data }) => {
-        setResult(data);
-      });
-  };
+        setResult(data)
+      })
+  }
 
   return (
     <div className="content">
@@ -62,6 +62,6 @@ const Problem = () => {
       )}
       {submission && <Result result={result} />}
     </div>
-  );
-};
-export default Problem;
+  )
+}
+export default Problem

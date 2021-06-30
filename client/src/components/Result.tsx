@@ -5,6 +5,6 @@ const Result = ({ result }) => {
       {!result && <p>Loading ...</p>}
       {result && result}
     </div>
-  );
-};
-export default Result;
+  )
+}
+export default Result
