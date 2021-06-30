@@ -60,7 +60,7 @@ export const useUserData = () => {
     ;async () => {
       if (user) {
         const doc = await db.collection("users").doc(user.uid).get()
-        //setUserData(doc.data())
+        setUserData(doc.data() as UserData)
         setLoading(false)
       }
     }
