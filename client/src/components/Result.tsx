@@ -1,4 +1,8 @@
-const Result = ({ result }: { result: string }) => {
+interface ResProps {
+  result: string
+}
+
+const Result = ({ result }: ResProps) => {
   return (
     <div>
       <h1>Your Result:</h1>
