@@ -1,5 +1,5 @@
 import { useParams } from "react-router"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Result from "./Result"
 
@@ -36,7 +36,7 @@ const Problem = () => {
   return (
     <div className="content">
       {!submission && (
-        <div>
+        <React.Fragment>
           <h1>{id}</h1>
           <div className="submit">
             <p className="statement">{statement}</p>
@@ -61,7 +61,7 @@ const Problem = () => {
               <input type="submit" value="submit!" />
             </form>
           </div>
-        </div>
+        </React.Fragment>
       )}
       {submission && <Result result={result} />}
     </div>
