@@ -1,8 +1,8 @@
-import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import "./App.css"
-import Home from "./components/Home"
-import Problem from "./components/Problem"
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
+import Home from "./components/Home";
+import Problem from "./components/Problem";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         </Route>
       </Switch>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
