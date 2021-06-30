@@ -1,7 +1,10 @@
 import { useParams } from "react-router"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import { Grid, Container } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core"
 import Result from "./Result"
+import useStyles from "../styles"
 
 interface ParamType {
   id: string
@@ -14,7 +17,8 @@ const Problem = () => {
   const [submission, setSubmission] = useState(false)
   const [result, setResult] = useState("")
   const { id } = useParams<ParamType>()
-  //console.log("this the id", id)
+
+  const classes = useStyles()
 
   useEffect(() => {
     axios

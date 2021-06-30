@@ -57,7 +57,7 @@ export const useUserData = () => {
   const [userData, setUserData] = useState<UserData | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
-    ;async () => {
+    const a = async () => {
       if (user) {
         const doc = await db.collection("users").doc(user.uid).get()
         setUserData(doc.data() as UserData)

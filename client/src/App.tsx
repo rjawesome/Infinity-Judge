@@ -9,7 +9,7 @@ import Signup from "./components/Signup"
 function App() {
   return (
     <React.Fragment>
-      {/* <Navbar /> */}
+      <Navbar />
       <Router>
         <Switch>
           <Route exact path="/">
@@ -18,9 +18,9 @@ function App() {
           <Route exact path="/problems/:id">
             <Problem />
           </Route>
-          {/* <Route exact path="/signup">
-          <Signup />
-        </Route>*/}
+          <Route exact path="/signup">
+            <Signup type={"login"} />
+          </Route>
         </Switch>
       </Router>
     </React.Fragment>
