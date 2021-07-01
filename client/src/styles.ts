@@ -34,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     padding: 10,
   },
+  signupForm: {
+    padding: 20,
+    width: 400,
+    margin: "20px auto",
+  },
+  signupButton: {
+    margin: "8px 0",
+  },
 }))
 
 export default useStyles

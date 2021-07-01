@@ -20,7 +20,7 @@ function App() {
             <Problem />
           </Route>
           <Route exact path="/signup">
-            <Signup type={"login"} />
+            <Signup type={"signup"} />
           </Route>
           <Route exact path="/about">
             <About />
