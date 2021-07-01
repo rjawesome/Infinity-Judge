@@ -21,6 +21,19 @@ const useStyles = makeStyles((theme) => ({
     margin: 10,
   },
   media: {},
+  problemTitle2: {
+    alignItems: "center",
+  },
+  cardActions: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  author: {
+    backgroundColor: "#5ce805",
+    borderRadius: 10,
+    display: "flex",
+    padding: 10,
+  },
 }))
 
 export default useStyles

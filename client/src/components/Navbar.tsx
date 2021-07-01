@@ -1,10 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-} from "@material-ui/core"
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core"
 import useStyles from "../styles"
 import { Link } from "@material-ui/core"
 
@@ -14,7 +8,7 @@ const Navbar = () => {
   return (
     <AppBar className={classes.appBar} position="static">
       <Toolbar>
-        <Typography color="primary" variant="h6">
+        <Typography color="primary" variant="h6" style={{ flex: 1 }}>
           OJ
         </Typography>
         <Button color="primary">
@@ -24,7 +18,7 @@ const Navbar = () => {
           <Link href="/signup">Login</Link>
         </Button>
         <Button color="primary">
-          <Link href="/">About</Link>
+          <Link href="/about">About</Link>
         </Button>
       </Toolbar>
     </AppBar>

@@ -1,10 +1,24 @@
 import { useParams } from "react-router"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Grid, Container } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core"
+import {
+  Grid,
+  Container,
+  TextField,
+  Typography,
+  Dialog,
+  Paper,
+  FormControlLabel,
+  Avatar,
+  Checkbox,
+  Button,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core"
 import Result from "./Result"
 import useStyles from "../styles"
+import { AirlineSeatFlatAngled } from "@material-ui/icons"
 
 interface ParamType {
   id: string
@@ -13,7 +27,7 @@ interface ParamType {
 const Problem = () => {
   const [statement, setStatement] = useState("")
   const [code, setCode] = useState("")
-  const [lang, setLang] = useState("cpp")
+  const [lang, setLang] = useState<string | null>("cpp")
   const [submission, setSubmission] = useState(false)
   const [result, setResult] = useState("")
   const { id } = useParams<ParamType>()
@@ -28,6 +42,7 @@ const Problem = () => {
 
   const problemSubmit = (e: any) => {
     e.preventDefault()
+    if (code === "") return
     setSubmission(true)
     console.log(code, lang)
     axios
@@ -37,38 +52,59 @@ const Problem = () => {
       })
   }
 
+  const paperStyle = {
+    padding: 20,
+    margin: "20px auto",
+  }
+  const avatarStyle = { backgroundColor: "#1bbd7e" }
+  const btnstyle = { margin: "8px 0" }
+
   return (
-    <div className="content">
+    <Container maxWidth="lg" className={classes.problemsContainer}>
       {!submission && (
         <React.Fragment>
-          <h1>{id}</h1>
-          <div className="submit">
-            <p className="statement">{statement}</p>
-            <form className="submit-form blue" onSubmit={problemSubmit}>
-              <textarea
-                required
-                placeholder="your code"
-                name="code"
-                value={code}
+          <Typography
+            color="primary"
+            variant="h4"
+            className={`${classes.problemTitle2} ${classes.problemTitle}`}
+          >
+            {id}
+          </Typography>
+          <Grid alignContent="center">
+            <Paper elevation={0} style={paperStyle}>
+              <TextField
+                label="code"
+                multiline
+                fullWidth
+                rows={10}
+                required={true}
                 onChange={(e) => setCode(e.target.value)}
-              ></textarea>
-
-              <select
-                required
-                name="lang"
-                onChange={(e) => setLang(e.target.value)}
+              />
+              <InputLabel>Language</InputLabel>
+              <Select
+                required={true}
+                onChange={(e) => setLang(e.target.value as string)}
               >
-                <option value="cpp">C++</option>
-                <option value="java">Java</option>
-                <option value="py">Python</option>
-              </select>
-              <input type="submit" value="submit!" />
-            </form>
-          </div>
+                <MenuItem value="cpp">C++</MenuItem>
+                <MenuItem value="py">Python</MenuItem>
+                <MenuItem value="java">Java</MenuItem>
+              </Select>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                style={btnstyle}
+                fullWidth
+                onClick={problemSubmit}
+              >
+                Submit
+              </Button>
+            </Paper>
+          </Grid>
         </React.Fragment>
       )}
       {submission && <Result result={result} />}
-    </div>
+    </Container>
   )
 }
 export default Problem

@@ -5,6 +5,7 @@ import Home from "./components/Home"
 import Problem from "./components/Problem"
 import Navbar from "./components/Navbar"
 import Signup from "./components/Signup"
+import About from "./components/About"
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route exact path="/signup">
             <Signup type={"login"} />
+          </Route>
+          <Route exact path="/about">
+            <About />
           </Route>
         </Switch>
       </Router>

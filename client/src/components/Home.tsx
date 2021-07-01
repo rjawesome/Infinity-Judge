@@ -10,6 +10,8 @@ import {
   CardActionArea,
   CardActions,
   CardMedia,
+  Box,
+  Avatar,
 } from "@material-ui/core"
 import useStyles from "../styles"
 
@@ -52,6 +54,9 @@ const Home = () => {
                   </CardContent>
                 </CardActionArea>
               </Link>
+              <CardActions className={classes.cardActions}>
+                <Box className={classes.author}>10/10</Box>
+              </CardActions>
             </Card>
           </Grid>
         ))}
