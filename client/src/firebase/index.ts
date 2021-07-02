@@ -60,13 +60,30 @@ export const useUserData = () => {
   const [userData, setUserData] = useState<UserData | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
-    const a = async () => {
+    const f = async () => {
       if (user) {
         const doc = await db.collection("users").doc(user.uid).get()
         setUserData(doc.data() as UserData)
         setLoading(false)
       }
     }
+    f()
   }, [user])
   return [userData, loading]
+}
+
+export const useIdToken = () => {
+  const [user] = useAuthState()
+  const [idToken, setIdToken] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
+  useEffect(() => {
+    const f = async () => {
+      if (user) {
+        setIdToken(await user.getIdToken())
+        setLoading(false)
+      }
+    }
+    f()
+  }, [user])
+  return [idToken, loading]
 }

@@ -7,6 +7,7 @@ interface ResProps {
 
 const Result = ({ result }: ResProps) => {
   const classes = useStyles()
+  console.log(result)
 
   return (
     <div>

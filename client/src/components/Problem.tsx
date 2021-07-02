@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core"
 import Result from "./Result"
 import useStyles from "../styles"
-import { AirlineSeatFlatAngled } from "@material-ui/icons"
+import { useIdToken } from "../firebase/index"
 
 interface ParamType {
   id: string
@@ -30,6 +30,7 @@ const Problem = () => {
   const [lang, setLang] = useState<string | null>("cpp")
   const [submission, setSubmission] = useState(false)
   const [result, setResult] = useState("")
+  const [idToken, idLoading] = useIdToken()
   const { id } = useParams<ParamType>()
 
   const classes = useStyles()
@@ -40,16 +41,21 @@ const Problem = () => {
       .then(({ data }) => setStatement(data))
   })
 
-  const problemSubmit = (e: any) => {
+  const problemSubmit = async (e: any) => {
     e.preventDefault()
     if (code === "") return
+    if (idLoading) return
     setSubmission(true)
     console.log(code, lang)
-    axios
-      .post(`http://localhost:10000/submit/${id}`, { code, lang })
-      .then(({ data }) => {
-        setResult(data)
-      })
+    setResult(
+      (
+        await axios.post(`http://localhost:10000/submit/${id}`, {
+          code,
+          lang,
+          idToken,
+        })
+      ).data
+    )
   }
 
   const paperStyle = {
