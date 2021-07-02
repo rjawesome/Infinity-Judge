@@ -20,19 +20,24 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     margin: 10,
   },
-  media: {},
+  problemStatement: {
+    fontSize: 15,
+  },
   problemTitle2: {
     alignItems: "center",
   },
   cardActions: {
     display: "flex",
-    justifyContent: "space-between",
   },
   author: {
-    backgroundColor: "#5ce805",
     borderRadius: 10,
     display: "flex",
     padding: 10,
+  },
+  result: {
+    borderRadius: 10,
+    display: "flex",
+    padding: 20,
   },
   signupForm: {
     padding: 20,

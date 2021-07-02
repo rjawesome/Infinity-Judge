@@ -6,19 +6,19 @@ import {
   Typography,
   Card,
   CardContent,
-  Button,
   CardActionArea,
   CardActions,
-  CardMedia,
   Box,
-  Avatar,
 } from "@material-ui/core"
 import useStyles from "../styles"
+import { useUserData } from "../firebase"
 
 const Home = () => {
   const [files, setFiles] = useState([])
-
+  const [userData, loading] = useUserData()
   const classes = useStyles()
+
+  // if (!loading) console.log((userData as any).problems["problem1"])
 
   useEffect(() => {
     fetch("http://localhost:10000/")
@@ -55,7 +55,24 @@ const Home = () => {
                 </CardActionArea>
               </Link>
               <CardActions className={classes.cardActions}>
-                <Box className={classes.author}>10/10</Box>
+                {!loading && (
+                  <Box
+                    bgcolor={
+                      (userData as any).problems[file] === undefined
+                        ? "#fff"
+                        : (userData as any).problems[file] === 10
+                        ? "#5ce805"
+                        : (userData as any).problems[file] > 0
+                        ? "#ffdd00 "
+                        : "#f02416"
+                    }
+                    className={classes.author}
+                  >
+                    {(userData as any).problems[file] === undefined
+                      ? "N/A"
+                      : `${(userData as any).problems[file]}/10`}
+                  </Box>
+                )}
               </CardActions>
             </Card>
           </Grid>

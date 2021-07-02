@@ -29,7 +29,7 @@ const Problem = () => {
   const [code, setCode] = useState("")
   const [lang, setLang] = useState<string | null>("cpp")
   const [submission, setSubmission] = useState(false)
-  const [result, setResult] = useState("")
+  const [result, setResult] = useState<string[] | null>()
   const [idToken, idLoading] = useIdToken()
   const { id } = useParams<ParamType>()
 
@@ -75,6 +75,13 @@ const Problem = () => {
             className={`${classes.problemTitle2} ${classes.problemTitle}`}
           >
             {id}
+          </Typography>
+          <Typography
+            color="primary"
+            variant="h5"
+            className={classes.problemStatement}
+          >
+            {statement}
           </Typography>
           <Grid alignContent="center">
             <Paper elevation={0} style={paperStyle}>

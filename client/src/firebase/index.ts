@@ -49,7 +49,7 @@ export const useAuthState = (): [firebase.User | null, boolean] => {
 }
 
 interface UserData {
-  handle: string
+  handle: string | null
   problems: {
     [id: string]: number
   }

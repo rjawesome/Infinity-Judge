@@ -1,13 +1,12 @@
-import { Typography } from "@material-ui/core"
+import { Typography, Box, CardActions } from "@material-ui/core"
 import useStyles from "../styles"
 
 interface ResProps {
-  result: string
+  result: string[] | null | undefined
 }
 
 const Result = ({ result }: ResProps) => {
   const classes = useStyles()
-  console.log(result)
 
   return (
     <div>
@@ -23,10 +22,18 @@ const Result = ({ result }: ResProps) => {
           Loading ...
         </Typography>
       )}
+
       {result && (
-        <Typography color="primary" variant="h6">
-          {result}
-        </Typography>
+        <CardActions className={classes.cardActions}>
+          {result.map((res) => (
+            <Box
+              bgcolor={res === "AC" ? "#5ce805" : "#f02416"}
+              className={`${classes.result}`}
+            >
+              {res}
+            </Box>
+          ))}
+        </CardActions>
       )}
     </div>
   )
