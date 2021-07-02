@@ -22,6 +22,9 @@ function App() {
           <Route exact path="/signup">
             <Signup type={"signup"} />
           </Route>
+          <Route exact path="/login">
+            <Signup type={"login"} />
+          </Route>
           <Route exact path="/about">
             <About />
           </Route>

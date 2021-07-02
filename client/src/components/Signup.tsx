@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useAuthState } from "../firebase"
+import { useAuthState, signUp, signIn } from "../firebase"
 import Loading from "./Loading"
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core"
 import useStyles from "../styles"
@@ -13,15 +13,23 @@ const Signup = ({ type }: LoginFormProps) => {
   const [handle, setHandle] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [signupLoading, setSignupLoading] = useState(false)
   const classes = useStyles()
 
   useEffect(() => {
     if (user) {
+      window.location.href = "/"
     }
   }, [user])
 
-  const handleSubmit = () => {
-    console.log("submitted")
+  const handleSubmit = async () => {
+    setSignupLoading(true)
+    if (type === "signup") {
+      await signUp(email, password, handle)
+    } else {
+      await signIn(email, password)
+    }
+    setSignupLoading(false)
   }
 
   return (
@@ -60,6 +68,7 @@ const Signup = ({ type }: LoginFormProps) => {
                 required
               />
               <Button
+                {...(signupLoading ? { disabled: true } : { disabled: false })}
                 onClick={handleSubmit}
                 className={classes.signupButton}
                 type="submit"
@@ -73,14 +82,6 @@ const Signup = ({ type }: LoginFormProps) => {
           </Grid>
         )}
       </div>
-
-      {/* <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-
-      <script src="../firebase/config.js"></script>
-      <script src="../firebase/index.js"></script>
-      <script src="../firebase/auth.js"></script> */}
     </div>
   )
 }

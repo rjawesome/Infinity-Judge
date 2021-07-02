@@ -1,6 +1,5 @@
 import "firebase/auth"
 import "firebase/firestore"
-
 import firebase from "firebase/app"
 import { useEffect, useState } from "react"
 
@@ -26,11 +25,15 @@ export const signUp = async (
   handle: string
 ) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password)
-  db.collection("users").doc("uid").set({ handle, problems: {} })
+  db.collection("users").doc(user?.uid).set({ handle, problems: {} })
 }
 
 export const signIn = async (email: string, password: string) => {
   await auth.signInWithEmailAndPassword(email, password)
+}
+
+export const signOut = async () => {
+  await auth.signOut()
 }
 
 export const useAuthState = (): [firebase.User | null, boolean] => {

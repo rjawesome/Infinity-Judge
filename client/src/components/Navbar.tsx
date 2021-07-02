@@ -1,9 +1,13 @@
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core"
 import useStyles from "../styles"
 import { Link } from "@material-ui/core"
+import { useAuthState, signOut } from "../firebase"
+import React from "react"
+import { useEffect } from "react"
 
 const Navbar = () => {
   const classes = useStyles()
+  const [user, loading] = useAuthState()
 
   return (
     <AppBar className={classes.appBar} position="static">
@@ -14,9 +18,21 @@ const Navbar = () => {
         <Button color="primary">
           <Link href="/">Home</Link>
         </Button>
-        <Button color="primary">
-          <Link href="/signup">Login</Link>
-        </Button>
+        {!user && (
+          <React.Fragment>
+            <Button color="primary">
+              <Link href="/signup">Sign up</Link>
+            </Button>
+            <Button color="primary">
+              <Link href="/login">Login</Link>
+            </Button>
+          </React.Fragment>
+        )}
+        {user && (
+          <Button color="primary" onClick={signOut}>
+            Logout
+          </Button>
+        )}
         <Button color="primary">
           <Link href="/about">About</Link>
         </Button>
