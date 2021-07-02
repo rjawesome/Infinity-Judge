@@ -1,9 +1,7 @@
-import { AppBar, Toolbar, Typography, Button } from "@material-ui/core"
+import { AppBar, Toolbar, Typography, Button, Link } from "@material-ui/core"
 import useStyles from "../styles"
-import { Link } from "@material-ui/core"
 import { useAuthState, signOut } from "../firebase"
 import React from "react"
-import { useEffect } from "react"
 
 const Navbar = () => {
   const classes = useStyles()

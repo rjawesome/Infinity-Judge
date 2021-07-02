@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAuthState, signUp, signIn } from "../firebase"
 import Loading from "./Loading"
-import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core"
+import { Grid, Paper, TextField, Button } from "@material-ui/core"
 import useStyles from "../styles"
 
 interface LoginFormProps {
