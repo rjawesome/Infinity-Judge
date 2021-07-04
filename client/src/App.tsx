@@ -6,6 +6,7 @@ import Problem from "./components/Problem"
 import Navbar from "./components/Navbar"
 import Signup from "./components/Signup"
 import About from "./components/About"
+import Create from "./components/Create"
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route exact path="/about">
             <About />
+          </Route>
+          <Route exact path="/create">
+            <Create />
           </Route>
         </Switch>
       </Router>
