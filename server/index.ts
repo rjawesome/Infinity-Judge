@@ -1,6 +1,6 @@
 import express, { RequestHandler } from "express"
 import cors from "cors"
-import { compileCPP, runBinary, runCPP, runJava, runPython } from "./judge"
+import { compileCPP, runBinary, runCPP, runJava, runPython, isolateDebug } from "./judge"
 import { verifyUser, updateScore } from "./firebase"
 import { promises as fs } from "fs"
 
@@ -9,6 +9,10 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
+
+app.get("/debug", async(req, res) => {
+  isolateDebug()
+})
 
 app.get("/", async (req, res) => {
   const files = await fs.readdir("problems")

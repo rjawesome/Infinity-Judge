@@ -21,6 +21,7 @@ RUN make isolate
 RUN make
 RUN make all
 RUN make install
+RUN isolate --cg --init
 
 EXPOSE 10000
 CMD [ "npm", "run", "start" ]

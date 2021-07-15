@@ -2,9 +2,32 @@ import { spawn, exec } from "child_process"
 import { v4 as uuid } from "uuid"
 import { promises as fs } from "fs"
 
+export function isolateDebug() {
+  //const process2 = spawn("pwd")
+  //console.log(process2)
+  // exec("isolate --cg --init", (err, stdout, stderr) => {
+  //   console.log("ERR", err)
+  //   console.log("STDOUT", stdout)
+  //   console.log("STDERR", stderr)
+  // })
+  console.log("---------YEE-------------")
+  var child = spawn("isolate", ["--cg", "--init"])
+  child.stderr.on('data', (data) => {
+    console.log("STDERR", data.toString())
+  })
+  spawn("cp", ["test.py", "/sys/fs/cgroup/memory/box-0/test.py"])
+  var child2 = spawn("ls", ["/sys/fs/cgroup/memory/box-0/"])
+  child2.stderr.on('data', (data) => {
+    console.log("LS err", data.toString())
+  })
+  child2.stdout.on('data', (data) => {
+    console.log("LS stdout", data.toString())
+  })
+}
+
 function runCommand(cmd: string, options: string[], stdin?: string) {
   const process = spawn(cmd, options)
-  
+
   return new Promise<string>((resolve, reject) => {
     let output = ""
     let err = ""
