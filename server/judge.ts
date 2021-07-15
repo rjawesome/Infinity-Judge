@@ -2,27 +2,43 @@ import { spawn, exec } from "child_process"
 import { v4 as uuid } from "uuid"
 import { promises as fs } from "fs"
 
-export function isolateDebug() {
-  //const process2 = spawn("pwd")
-  //console.log(process2)
-  // exec("isolate --cg --init", (err, stdout, stderr) => {
-  //   console.log("ERR", err)
-  //   console.log("STDOUT", stdout)
-  //   console.log("STDERR", stderr)
+export const isolateDebug = async(script: string, input: string) => {
+  // exec("isolate --cg --cleanup", (err, stdout, stderr) => {
+  //   // console.log("ERR", err)
+  //   // console.log("STDOUT", stdout)
+  //   // console.log("STDERR", stderr)
   // })
-  console.log("---------YEE-------------")
+  exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
+
+  const filename = uuid()
+  try {
+    await fs.writeFile(`programs/${filename}.py`, script)
+    await fs.writeFile(`programs/${filename}.txt`, input)
+  } catch (e) {
+    console.log(e)
+  }
+
+  console.log("---------YEE YEE-------------")
   var child = spawn("isolate", ["--cg", "--init"])
   child.stderr.on('data', (data) => {
+    console.log("STDOUT", data.toString())
     console.log("STDERR", data.toString())
   })
-  spawn("cp", ["test.py", "/sys/fs/cgroup/memory/box-0/test.py"])
-  var child2 = spawn("ls", ["/sys/fs/cgroup/memory/box-0/"])
-  child2.stderr.on('data', (data) => {
-    console.log("LS err", data.toString())
+  //var/local/lib/isolate/0/box
+  //var child2 = spawn("cp", ["test.py /var/local/lib/isolate/0/box/test.py"])
+  //child2.stdout.on('data', (data) => console.log("child2", data.toString()))
+  //child2.stderr.on('data', (data) => console.log("child2", data.toString()))
+  exec(`cp programs/${filename}.py /var/local/lib/isolate/0/box/${filename}.py`)
+  exec(`cp programs/${filename}.txt /var/local/lib/isolate/0/box/${filename}.txt`)
+
+  exec(`isolate --cg --env=HOME=/home/user -i ${filename}.txt --run /usr/bin/python3 ${filename}.py`, (err, stdout, stderr) => {
+    console.log("run output", stdout)
+    console.log("run error", stderr)
   })
-  child2.stdout.on('data', (data) => {
-    console.log("LS stdout", data.toString())
-  })
+  
+  // var child3 = spawn("ls", [])
+  // child3.stdout.on('data', (data) => console.log("child3", data.toString()))
+  // child3.stderr.on('data', (data) => console.log("child3", data.toString()))
 }
 
 function runCommand(cmd: string, options: string[], stdin?: string) {

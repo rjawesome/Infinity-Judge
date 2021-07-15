@@ -1,1 +1,2 @@
-print("no way docker is working")
+a = input()
+print(a)

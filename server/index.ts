@@ -11,7 +11,8 @@ app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 
 app.get("/debug", async(req, res) => {
-  isolateDebug()
+  isolateDebug("print('lfg uid works')", "")
+  res.send("received")
 })
 
 app.get("/", async (req, res) => {
