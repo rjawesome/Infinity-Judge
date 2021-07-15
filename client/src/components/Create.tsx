@@ -32,7 +32,7 @@ const Create = () => {
   }
 
   const createTestcase = () => {
-    setTestcases([...testcases, { tc: tc, answer: answer }])
+    // setTestcases([...testcases, { tc: tc, answer: answer }])
     setTc("")
     setAnswer("")
   }

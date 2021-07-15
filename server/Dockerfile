@@ -14,6 +14,7 @@ RUN npm install
 
 COPY . .
 
+RUN mkdir programs
 RUN git clone https://github.com/ioi/isolate.git
 WORKDIR /usr/src/app/isolate
 RUN make isolate

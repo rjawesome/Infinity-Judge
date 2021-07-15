@@ -18,7 +18,7 @@ app.get("/", async (req, res) => {
 
 app.get("/:id", async (req, res) => {
   const { id } = req.params
-  console.log(id)
+  //console.log(id)
   const statement = await (
     await fs.readFile(`problems/${id}/statement.txt`)
   ).toString()
@@ -34,8 +34,7 @@ app.post("/submit/:id", async (req, res) => {
   const { id } = req.params as { id: string }
 
   const user = await verifyUser(idToken)
-
-  let fullResult: string[] = []
+  let fullResult: string[] = ["?"]
   let tc_count = ((await fs.readdir(`problems/${id}/`)).length - 1) / 2
   if (lang === "cpp") {
     code = await compileCPP(code)
@@ -45,13 +44,13 @@ app.post("/submit/:id", async (req, res) => {
   let correct = 0
 
   for (let i = 1; i <= tc_count; i++) {
-    if (fullResult[0] === "C") break
+    if (fullResult[0][0] === "C") break
     const input = (await fs.readFile(`problems/${id}/t${i}.in`)).toString()
     const output = (await fs.readFile(`problems/${id}/t${i}.out`)).toString()
     const result = await getResult(code, lang, input).catch((e) => {
       fullResult = ["Compilation Error ------ " + e]
     })
-    if (fullResult[0] === "C") break
+    if (fullResult[0][0] === "C") break
     fullResult.push(result == output ? "AC" : "WA")
     if (result == output) correct++
   }

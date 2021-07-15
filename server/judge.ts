@@ -4,22 +4,23 @@ import { promises as fs } from "fs"
 
 function runCommand(cmd: string, options: string[], stdin?: string) {
   const process = spawn(cmd, options)
-
+  
   return new Promise<string>((resolve, reject) => {
     let output = ""
     let err = ""
     if (stdin) process.stdin.end(stdin)
-
+    
     process.stdout.on("data", (data) => {
       output += data
     })
     process.stderr.on("data", (data) => {
       err += data
     })
-
+    
     process.on("close", (code) => {
       if (code != 0) {
         reject(err)
+        console.log("RUN COMMAND")
       } else {
         //console.log(output)
         resolve(output)
@@ -44,7 +45,7 @@ export const compileCPP = async (script: string) => {
   try {
     await fs.writeFile(`./programs/${filename}.cpp`, script)
   } catch (e) {
-    console.log("COMPILE ERROR", e)
+    console.log(e)
   }
 
   try {
@@ -55,9 +56,10 @@ export const compileCPP = async (script: string) => {
       `./programs/${filename}`,
     ])
   } catch (e) {
-    //console.log("COMPILE CPP ERROR HERE", e)
+    console.log("COMPILE CPP ERROR HERE", e)
     return e
   }
+  console.log("yo")
   return filename
 }
 
