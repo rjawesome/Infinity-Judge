@@ -6,7 +6,7 @@ import { promises as fs } from "fs"
 
 const app = express()
 
-app.use(express.json() as RequestHandler)
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 
@@ -18,6 +18,7 @@ app.get("/", async (req, res) => {
 
 app.get("/:id", async (req, res) => {
   const { id } = req.params
+  console.log(id)
   const statement = await (
     await fs.readFile(`problems/${id}/statement.txt`)
   ).toString()
