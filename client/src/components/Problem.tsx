@@ -33,7 +33,7 @@ const Problem = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:10000/${id}`)
+      .get(`http://localhost:10000/problems/${id}`)
       .then(({ data }) => setStatement(data))
   })
 

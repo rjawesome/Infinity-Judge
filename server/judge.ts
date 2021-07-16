@@ -2,46 +2,55 @@ import { spawn, exec } from "child_process"
 import { v4 as uuid } from "uuid"
 import { promises as fs } from "fs"
 
-export const isolateDebug = async(script: string, input: string) => {
+export const isolateDebug = async (progName: string, inpName: string) => {
+  var child = spawn("isolate", ["--cg", "--init"])
+  child.stderr.on("data", (data) => {
+    console.log("STDOUT", data.toString())
+    console.log("STDERR", data.toString())
+  })
 
   exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
+  exec(
+    `sudo cp programs/${progName} /var/local/lib/isolate/0/box/${progName}`,
+    (err, stdout, stderr) => console.log("COPY ERROR", err)
+  )
+  exec(
+    `sudo cp programs/${inpName} /var/local/lib/isolate/0/box/${inpName}`,
+    (err, stdout, stderr) => console.log("COPY ERROR", err)
+  )
 
+  // var process = exec(
+  //   `isolate --cg --env=HOME=/home/user -t=1 -i ${inpName} --run /usr/bin/python3 ${progName}`,
+  //   (err, stdout, stderr) => {
+  //     console.log("run output", stdout)
+  //     console.log("run error", stderr)
+  //   }
+  // )
+
+  // return new Promise<string>((resolve, reject) => {
+
+  //   var output = "",
+  //     error = ""
+
+  //   process.stdout.on("data", (data) => (output += data))
+  //   process.stderr.on("data", (data) => (error += data))
+  //   process.on("close", (data) => {
+  //     if (data != 0) reject(error)
+  //     else resolve(output)
+  //   })
+  // })
+}
+
+export const runPython2 = async (script: string, input: string) => {
+  exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
   const filename = uuid()
   try {
     await fs.writeFile(`programs/${filename}.py`, script)
+    await fs.writeFile(`programs/${filename}.txt`, input)
   } catch (e) {
     console.log(e)
   }
-  try{
-    await fs.writeFile(`programs/${filename}.txt`, input)
-  } catch(e) {
-    console.log(e)
-  }
-  exec(`sudo cp programs/${filename}.py /var/local/lib/isolate/0/box/${filename}.py`, (err, stdout, stderr) => console.log(stderr))
-  exec(`sudo cp programs/${filename}.txt /var/local/lib/isolate/0/box/${filename}.txt`, (err, stdout, stderr) => console.log(stderr))
-  
-      var process = exec(`isolate --cg --env=HOME=/home/user -t=1 -i ${filename}.txt --run /usr/bin/python3 ${filename}.py`, (err, stdout, stderr) => {
-        console.log("run output", stdout)
-        console.log("run error", stderr)
-      })
-      
-      return new Promise<string>((resolve, reject) => {
-        //console.log("---------YEE YEE-------------")
-        var child = spawn("isolate", ["--cg", "--init"])
-        child.stderr.on('data', (data) => {
-          console.log("STDOUT", data.toString())
-          console.log("STDERR", data.toString())
-        })
-        
-        
-        var output="", error=""
-        process.stdout.on("data", (data) => output+=data)
-        process.stderr.on("data", (data) => error+=data)
-    process.on('close', (data) => {
-      if(data != 0)reject(error)
-      else resolve(output)
-    })
-  })
+  isolateDebug(`${filename}.py`, `${filename}.txt`)
 }
 
 function runCommand(cmd: string, options: string[], stdin?: string) {
@@ -51,14 +60,14 @@ function runCommand(cmd: string, options: string[], stdin?: string) {
     let output = ""
     let err = ""
     if (stdin) process.stdin.end(stdin)
-    
+
     process.stdout.on("data", (data) => {
       output += data
     })
     process.stderr.on("data", (data) => {
       err += data
     })
-    
+
     process.on("close", (code) => {
       console.log("EXIT CODE IS ", code)
       if (code != 0) {
