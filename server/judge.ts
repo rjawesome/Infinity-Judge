@@ -3,42 +3,45 @@ import { v4 as uuid } from "uuid"
 import { promises as fs } from "fs"
 
 export const isolateDebug = async(script: string, input: string) => {
-  // exec("isolate --cg --cleanup", (err, stdout, stderr) => {
-  //   // console.log("ERR", err)
-  //   // console.log("STDOUT", stdout)
-  //   // console.log("STDERR", stderr)
-  // })
+
   exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
 
   const filename = uuid()
   try {
     await fs.writeFile(`programs/${filename}.py`, script)
-    await fs.writeFile(`programs/${filename}.txt`, input)
   } catch (e) {
     console.log(e)
   }
-
-  console.log("---------YEE YEE-------------")
-  var child = spawn("isolate", ["--cg", "--init"])
-  child.stderr.on('data', (data) => {
-    console.log("STDOUT", data.toString())
-    console.log("STDERR", data.toString())
-  })
-  //var/local/lib/isolate/0/box
-  //var child2 = spawn("cp", ["test.py /var/local/lib/isolate/0/box/test.py"])
-  //child2.stdout.on('data', (data) => console.log("child2", data.toString()))
-  //child2.stderr.on('data', (data) => console.log("child2", data.toString()))
-  exec(`cp programs/${filename}.py /var/local/lib/isolate/0/box/${filename}.py`)
-  exec(`cp programs/${filename}.txt /var/local/lib/isolate/0/box/${filename}.txt`)
-
-  exec(`isolate --cg --env=HOME=/home/user -i ${filename}.txt --run /usr/bin/python3 ${filename}.py`, (err, stdout, stderr) => {
-    console.log("run output", stdout)
-    console.log("run error", stderr)
-  })
+  try{
+    await fs.writeFile(`programs/${filename}.txt`, input)
+  } catch(e) {
+    console.log(e)
+  }
+  exec(`sudo cp programs/${filename}.py /var/local/lib/isolate/0/box/${filename}.py`, (err, stdout, stderr) => console.log(stderr))
+  exec(`sudo cp programs/${filename}.txt /var/local/lib/isolate/0/box/${filename}.txt`, (err, stdout, stderr) => console.log(stderr))
   
-  // var child3 = spawn("ls", [])
-  // child3.stdout.on('data', (data) => console.log("child3", data.toString()))
-  // child3.stderr.on('data', (data) => console.log("child3", data.toString()))
+      var process = exec(`isolate --cg --env=HOME=/home/user -t=1 -i ${filename}.txt --run /usr/bin/python3 ${filename}.py`, (err, stdout, stderr) => {
+        console.log("run output", stdout)
+        console.log("run error", stderr)
+      })
+      
+      return new Promise<string>((resolve, reject) => {
+        //console.log("---------YEE YEE-------------")
+        var child = spawn("isolate", ["--cg", "--init"])
+        child.stderr.on('data', (data) => {
+          console.log("STDOUT", data.toString())
+          console.log("STDERR", data.toString())
+        })
+        
+        
+        var output="", error=""
+        process.stdout.on("data", (data) => output+=data)
+        process.stderr.on("data", (data) => error+=data)
+    process.on('close', (data) => {
+      if(data != 0)reject(error)
+      else resolve(output)
+    })
+  })
 }
 
 function runCommand(cmd: string, options: string[], stdin?: string) {
@@ -57,9 +60,9 @@ function runCommand(cmd: string, options: string[], stdin?: string) {
     })
     
     process.on("close", (code) => {
+      console.log("EXIT CODE IS ", code)
       if (code != 0) {
         reject(err)
-        console.log("RUN COMMAND")
       } else {
         //console.log(output)
         resolve(output)
