@@ -7,7 +7,7 @@ import {
   runJava,
   runPython,
   isolateDebug,
-  runPython2,
+  runPythonIsolate,
 } from "./judge"
 import { verifyUser, updateScore } from "./firebase"
 import { promises as fs } from "fs"
@@ -18,10 +18,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 
-// app.get("/debug", async (req, res) => {
-//   const ans = runPython2("print(123)", " ")
-//   res.send(ans)
-// })
+app.get("/debug", async (req, res) => {
+  const ans = await runPythonIsolate("print(123)", " ")
+  console.log("ANSWER", ans)
+  res.send(ans)
+})
 
 app.get("/", async (req, res) => {
   const files = await fs.readdir("problems")
@@ -30,7 +31,6 @@ app.get("/", async (req, res) => {
 })
 
 app.get("/problems/:id", async (req, res) => {
-  console.log("call")
   const { id } = req.params
   //console.log(id)
   const statement = await (

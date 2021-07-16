@@ -2,46 +2,56 @@ import { spawn, exec } from "child_process"
 import { v4 as uuid } from "uuid"
 import { promises as fs } from "fs"
 
-export const isolateDebug = async (progName: string, inpName: string) => {
+export const isolateDebug = async (
+  progName: string,
+  lang: string,
+  inpName?: string
+) => {
   var child = spawn("isolate", ["--cg", "--init"])
   child.stderr.on("data", (data) => {
-    console.log("STDOUT", data.toString())
-    console.log("STDERR", data.toString())
+    // console.log("STDOUT", data.toString())
+    // console.log("STDERR", data.toString())
   })
 
   exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
   exec(
-    `sudo cp programs/${progName} /var/local/lib/isolate/0/box/${progName}`,
+    `cp programs/${progName} /var/local/lib/isolate/0/box/${progName}`,
     (err, stdout, stderr) => console.log("COPY ERROR", err)
   )
   exec(
-    `sudo cp programs/${inpName} /var/local/lib/isolate/0/box/${inpName}`,
+    `cp programs/${inpName} /var/local/lib/isolate/0/box/${inpName}`,
     (err, stdout, stderr) => console.log("COPY ERROR", err)
   )
 
-  // var process = exec(
-  //   `isolate --cg --env=HOME=/home/user -t=1 -i ${inpName} --run /usr/bin/python3 ${progName}`,
-  //   (err, stdout, stderr) => {
-  //     console.log("run output", stdout)
-  //     console.log("run error", stderr)
-  //   }
-  // )
+  console.log("copies done")
 
-  // return new Promise<string>((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
+    var process
+    if (lang === "py") {
+      process = exec(
+        `isolate --cg --env=HOME=/home/user -i ${inpName} --run /usr/bin/python3 ${progName}`,
+        (err, stdout, stderr) => {
+          console.log("run output", stdout)
+          console.log("run error", stderr)
+        }
+      )
+    }
+    if (lang === "cpp") {
+      process = exec(`isolate --run ${progName} -i ${inpName}`)
+    }
+    var output = "",
+      error = ""
 
-  //   var output = "",
-  //     error = ""
-
-  //   process.stdout.on("data", (data) => (output += data))
-  //   process.stderr.on("data", (data) => (error += data))
-  //   process.on("close", (data) => {
-  //     if (data != 0) reject(error)
-  //     else resolve(output)
-  //   })
-  // })
+    process.stdout.on("data", (data) => (output += data))
+    process.stderr.on("data", (data) => (error += data))
+    process.on("close", (code) => {
+      if (code != 0) reject(error)
+      else resolve(output)
+    })
+  })
 }
 
-export const runPython2 = async (script: string, input: string) => {
+export const runPythonIsolate = async (script: string, input: string) => {
   exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
   const filename = uuid()
   try {
@@ -50,8 +60,10 @@ export const runPython2 = async (script: string, input: string) => {
   } catch (e) {
     console.log(e)
   }
-  isolateDebug(`${filename}.py`, `${filename}.txt`)
+  return await isolateDebug(`${filename}.py`, `${filename}.txt`, "py")
 }
+
+export const runCPP2 = async (script: string, input: string) => {}
 
 function runCommand(cmd: string, options: string[], stdin?: string) {
   const process = spawn(cmd, options)
@@ -88,6 +100,7 @@ export const runPython = async (script: string, input: string) => {
     console.log(e)
   }
 
+  return runPythonIsolate(script, input)
   return runCommand("python", [`programs/${filename}.py`], input)
 }
 
@@ -115,6 +128,12 @@ export const compileCPP = async (script: string) => {
 }
 
 export const runBinary = async (name: string, input: string) => {
+  try {
+    await fs.writeFile(`./programs/${name}.txt`, input)
+  } catch (e) {
+    console.log(e)
+  }
+  return isolateDebug(`${name}`, "cpp", `${name}.txt`)
   return runCommand(`programs/${name}`, [], input)
 }
 
