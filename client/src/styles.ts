@@ -34,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     padding: 10,
   },
+  difficulty: {
+    borderRadius: 2,
+    display: "flex",
+    padding: 2,
+  },
   result: {
     borderRadius: 10,
     display: "flex",

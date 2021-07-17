@@ -12,6 +12,15 @@ import {
 } from "@material-ui/core"
 import useStyles from "../styles"
 import { useUserData, useAuthState } from "../firebase"
+import jsonDataImport from "../metadata.json"
+
+interface metadata {
+  [id: string]: {
+    difficulty: string
+    tc_count: number
+  }
+}
+const jsonData = jsonDataImport as metadata
 
 const Home = () => {
   const [files, setFiles] = useState([])
@@ -22,18 +31,23 @@ const Home = () => {
   // if (!loading) console.log((userData as any).problems["problem1"])
 
   useEffect(() => {
+    //console.log(jsonData["problem1"].tc_count)
     fetch("http://localhost:10000/")
       .then((res) => res.json())
       .then((data) => {
         setFiles(data)
       })
-    console.log(loading)
-    console.log(userData)
+    //console.log(loading)
+    //console.log(userData)
   })
 
-  const getColor = (x: number | undefined) => {
+  const getDifficulty = (problem: string) => jsonData[problem].difficulty
+  const getTcCount = (problem: string) => jsonData[problem].tc_count
+
+  const getColor = (x: number | undefined, problem: string) => {
     if (x === undefined) return "#fff"
-    if (x === 10) return "#5ce805"
+    //console.log(x, getjson(problem))
+    if (x === getTcCount(problem)) return "#5ce805"
     if (x > 0) return "#ffdd00"
     return "#f02416"
   }
@@ -60,7 +74,9 @@ const Home = () => {
                         {file}
                       </Typography>
                       <Typography variant="body1" color="primary" component="p">
-                        some tags
+                        {/* <Box bgcolor="#000" className={classes.difficulty}> */}
+                        {getDifficulty(file)}
+                        {/* </Box> */}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
@@ -68,12 +84,12 @@ const Home = () => {
                 <CardActions className={classes.cardActions}>
                   {!loading && (
                     <Box
-                      bgcolor={getColor((userData as any).problems[file])}
+                      bgcolor={getColor(userData!.problems[file], file)}
                       className={classes.author}
                     >
-                      {(userData as any).problems[file] === undefined
+                      {userData!.problems[file] === undefined
                         ? "N/A"
-                        : `${(userData as any).problems[file]}/10`}
+                        : `${userData!.problems[file]}/${getTcCount(file)}`}
                     </Box>
                   )}
                 </CardActions>
