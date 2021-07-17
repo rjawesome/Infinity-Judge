@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 
 app.get("/debug", async (req, res) => {
-  const ans = await runPythonIsolate("print(123)", " ")
+  const ans = await runPythonIsolate("print(123)", "asdf")
   console.log("ANSWER", ans)
   res.send(ans)
 })
@@ -66,11 +66,12 @@ app.post("/submit/:id", async (req, res) => {
     })
     if (fullResult[0][0] === "C") break
     fullResult.push(result == output ? "AC" : "WA")
+    console.log("RESULT AND OUTPUT", result, output)
     if (result == output) correct++
   }
 
   await updateScore(user.uid, id, correct)
-
+  if (fullResult[0] == "?") fullResult.shift()
   res.json(fullResult)
 })
 

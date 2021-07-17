@@ -59,16 +59,22 @@ export const useUserData = () => {
   const [user] = useAuthState()
   const [userData, setUserData] = useState<UserData | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
+
+  const f = async () => {
+    if (user === null) return
+    console.log("INSIDE F")
+    const doc = await db.collection("users").doc(user.uid).get()
+    console.log("DOC")
+    setUserData(doc.data() as UserData)
+    setLoading(false)
+  }
+
   useEffect(() => {
-    const f = async () => {
-      if (user) {
-        const doc = await db.collection("users").doc(user.uid).get()
-        setUserData(doc.data() as UserData)
-        setLoading(false)
-      }
-    }
-    f()
+    if (user) f()
   }, [user])
+
+  if (user) f()
+  console.log(userData, "LOADING", loading)
   return [userData, loading]
 }
 

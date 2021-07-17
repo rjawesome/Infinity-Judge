@@ -4,13 +4,13 @@ import { promises as fs } from "fs"
 
 export const isolateDebug = async (
   progName: string,
-  lang: string,
-  inpName?: string
+  inpName: string,
+  lang: string
 ) => {
   var child = spawn("isolate", ["--cg", "--init"])
   child.stderr.on("data", (data) => {
-    // console.log("STDOUT", data.toString())
-    // console.log("STDERR", data.toString())
+    console.log("STDOUT", data.toString())
+    console.log("STDERR", data.toString())
   })
 
   exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
@@ -28,8 +28,9 @@ export const isolateDebug = async (
   return new Promise<string>((resolve, reject) => {
     var process
     if (lang === "py") {
+      console.log("AT PYTHON")
       process = exec(
-        `isolate --cg --env=HOME=/home/user -i ${inpName} --run /usr/bin/python3 ${progName}`,
+        `isolate --env=HOME=/home/user -i ${inpName} --run /usr/bin/python3 ${progName}`,
         (err, stdout, stderr) => {
           console.log("run output", stdout)
           console.log("run error", stderr)
@@ -94,11 +95,11 @@ function runCommand(cmd: string, options: string[], stdin?: string) {
 
 export const runPython = async (script: string, input: string) => {
   const filename = uuid()
-  try {
-    await fs.writeFile(`programs/${filename}.py`, script)
-  } catch (e) {
-    console.log(e)
-  }
+  // try {
+  //   await fs.writeFile(`programs/${filename}.py`, script)
+  // } catch (e) {
+  //   console.log(e)
+  // }
 
   return runPythonIsolate(script, input)
   return runCommand("python", [`programs/${filename}.py`], input)
@@ -133,8 +134,8 @@ export const runBinary = async (name: string, input: string) => {
   } catch (e) {
     console.log(e)
   }
-  return isolateDebug(`${name}`, "cpp", `${name}.txt`)
-  return runCommand(`programs/${name}`, [], input)
+  return isolateDebug(`${name}`, `${name}.txt`, "cpp")
+  //return runCommand(`programs/${name}`, [], input)
 }
 
 export const runCPP = async (script: string, input: string) => {

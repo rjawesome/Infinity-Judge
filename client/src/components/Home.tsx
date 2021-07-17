@@ -27,6 +27,8 @@ const Home = () => {
       .then((data) => {
         setFiles(data)
       })
+    console.log(loading)
+    console.log(userData)
   })
 
   const getColor = (x: number | undefined) => {
