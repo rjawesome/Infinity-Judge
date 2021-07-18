@@ -1,1 +1,0 @@
-give 2 numbers a,b separated by space. Compute a-b. Make sure output ends in a new line
