@@ -17,10 +17,10 @@ const Signup = ({ type }: LoginFormProps) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (user) {
+    if (user && !signupLoading) {
       window.location.href = "/"
     }
-  }, [user])
+  }, [user, signupLoading])
 
   const handleSubmit = async () => {
     setSignupLoading(true)
