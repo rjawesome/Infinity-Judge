@@ -1,0 +1,18 @@
+{
+  "summation": {
+    "difficulty": "easy",
+    "tc_count": 10
+  },
+  "subtraction": {
+    "difficulty": "easy",
+    "tc_count": 10
+  },
+  "multiplication": {
+    "difficulty": "easy",
+    "tc_count": 10
+  },
+  "division": {
+    "difficulty": "easy",
+    "tc_count": 10
+  }
+}

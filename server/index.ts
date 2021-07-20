@@ -11,6 +11,16 @@ import {
 } from "./judge"
 import { verifyUser, updateScore } from "./firebase"
 import { promises as fs } from "fs"
+import jsonDataImport from "./metadata.json"
+
+interface metadata {
+  [id: string]: {
+    difficulty: string
+    tc_count: number
+  }
+}
+
+const jsonData = jsonDataImport as metadata
 
 const app = express()
 
@@ -18,16 +28,19 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 app.use(cors())
 
-app.get("/debug", async (req, res) => {
-  const ans = await runPythonIsolate("print(123)", "asdf")
-  console.log("ANSWER", ans)
-  res.send(ans)
-})
+// app.get("/debug", async (req, res) => {
+//   const ans = await runPythonIsolate("print(123)", "asdf")
+//   console.log("ANSWER", ans)
+//   res.send(ans)
+// })
 
 app.get("/", async (req, res) => {
   const files = await fs.readdir("problems")
   //console.log(files)
-  res.json(files)
+  res.json({
+    files,
+    metadata: jsonData
+  })
 })
 
 app.get("/problems/:id", async (req, res) => {

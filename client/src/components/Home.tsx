@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core"
 import useStyles from "../styles"
 import { useUserData, useAuthState } from "../firebase"
-import jsonDataImport from "../metadata.json"
 
 interface metadata {
   [id: string]: {
@@ -20,35 +19,39 @@ interface metadata {
     tc_count: number
   }
 }
-const jsonData = jsonDataImport as metadata
+
+interface apiData {
+  files: string[]
+  metadata: metadata
+}
 
 const Home = () => {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<string[]>([])
+  const [metadata, setMetadata] = useState<metadata | null>(null)
   const [userData, loading] = useUserData()
   const [user, loading2] = useAuthState()
   const classes = useStyles()
-
-  // if (!loading) console.log((userData as any).problems["problem1"])
 
   useEffect(() => {
     //console.log(jsonData["problem1"].tc_count)
     fetch("http://localhost:10000/")
       .then((res) => res.json())
-      .then((data) => {
-        setFiles(data)
+      .then((data: apiData) => {
+        setFiles(data.files)
+        setMetadata(data.metadata)
       })
     //console.log(loading)
     //console.log(userData)
   })
+  const getDifficulty = (problem: string) =>
+    metadata ? metadata[problem].difficulty : "loading"
+  const getTcCount = (problem: string) =>
+    metadata ? metadata[problem].tc_count : "loading"
 
-  const getDifficulty = (problem: string) => jsonData[problem].difficulty
-  const getTcCount = (problem: string) => jsonData[problem].tc_count
-
-  const getColor = (x: number | undefined, problem: string) => {
-    if (x === undefined) return "#fff"
-    //console.log(x, getjson(problem))
-    if (x === getTcCount(problem)) return "#5ce805"
-    if (x > 0) return "#ffdd00"
+  const getColor = (userTcs: number | undefined, problem: string) => {
+    if (userTcs === undefined) return "#fff"
+    if (userTcs === getTcCount(problem)) return "#5ce805"
+    if (userTcs > 0) return "#ffdd00"
     return "#f02416"
   }
 
