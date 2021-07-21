@@ -31,10 +31,11 @@ const Home = () => {
   const [userData, loading] = useUserData()
   const [user, loading2] = useAuthState()
   const classes = useStyles()
+  const url: string = process.env.REACT_APP_SERVER_URL!
 
   useEffect(() => {
     //console.log(jsonData["problem1"].tc_count)
-    fetch("http://localhost:10000/")
+    fetch(url)
       .then((res) => res.json())
       .then((data: apiData) => {
         setFiles(data.files)

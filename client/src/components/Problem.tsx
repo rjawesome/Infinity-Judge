@@ -30,11 +30,10 @@ const Problem = () => {
   const { id } = useParams<ParamType>()
 
   const classes = useStyles()
+  const url: string = process.env.REACT_APP_SERVER_URL!
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:10000/problems/${id}`)
-      .then(({ data }) => setStatement(data))
+    axios.get(`${url}problems/${id}`).then(({ data }) => setStatement(data))
   })
 
   const problemSubmit = async (e: any) => {
@@ -45,7 +44,7 @@ const Problem = () => {
     console.log(code, lang)
     setResult(
       (
-        await axios.post(`http://localhost:10000/submit/${id}`, {
+        await axios.post(`${url}submit/${id}`, {
           code,
           lang,
           idToken,
