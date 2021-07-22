@@ -52,6 +52,6 @@ const useStyles = makeStyles((theme) => ({
   signupButton: {
     margin: "8px 0",
   },
-}))
+}), {index: 1})
 
 export default useStyles
