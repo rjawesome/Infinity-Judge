@@ -24,10 +24,14 @@ const Signup = ({ type }: LoginFormProps) => {
 
   const handleSubmit = async () => {
     setSignupLoading(true)
-    if (type === "signup") {
-      await signUp(email, password, handle)
-    } else {
-      await signIn(email, password)
+    try {
+      if (type === "signup") {
+        await signUp(email, password, handle)
+      } else {
+        await signIn(email, password)
+      }
+    } catch (e) {
+      alert(e.message)
     }
     setSignupLoading(false)
   }
