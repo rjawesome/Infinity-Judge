@@ -25,7 +25,7 @@ export const signUp = async (
   handle: string
 ) => {
   const { user } = await auth.createUserWithEmailAndPassword(email, password)
-  db.collection("users").doc(user?.uid).set({ handle, problems: {} })
+  await db.collection("users").doc(user?.uid).set({ handle, problems: {} })
 }
 
 export const signIn = async (email: string, password: string) => {
