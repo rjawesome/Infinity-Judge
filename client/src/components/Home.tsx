@@ -43,7 +43,7 @@ const Home = () => {
       })
     //console.log(loading)
     //console.log(userData)
-  })
+  }, [])
   const getDifficulty = (problem: string) =>
     metadata ? metadata[problem].difficulty : "loading"
   const getTcCount = (problem: string) =>

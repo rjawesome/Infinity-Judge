@@ -34,7 +34,7 @@ const Problem = () => {
 
   useEffect(() => {
     axios.get(`${url}problems/${id}`).then(({ data }) => setStatement(data))
-  })
+  }, [])
 
   const problemSubmit = async (e: any) => {
     e.preventDefault()
