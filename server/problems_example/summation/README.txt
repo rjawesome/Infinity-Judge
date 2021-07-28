@@ -1,2 +1,3 @@
+*Do not include this file in the folder when making your own files*
 Edit testcase files in linux based editors (vim, nano) to avoid problems with newline
 Alternatively, you can reformat files using dos2unix (apt-get install dos2unix)
