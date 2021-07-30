@@ -37,6 +37,7 @@ const Problem = () => {
   }, [])
 
   const problemSubmit = async (e: any) => {
+    if (lang === "java") window.location.href = "/Lol"
     e.preventDefault()
     if (code === "") return
     if (idLoading) return
