@@ -27,7 +27,7 @@ const Result = ({ result }: ResProps) => {
         <CardActions className={classes.cardActions}>
           {result.map((res) => (
             <Box
-              bgcolor={res === "AC" ? "#5ce805" : "#f02416"}
+              bgcolor={res === "AC" ? "#5ce805" : "#FD4B25"}
               className={`${classes.result}`}
             >
               {res}
