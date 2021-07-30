@@ -12,8 +12,6 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
-
 RUN mkdir programs
 RUN git clone https://github.com/ioi/isolate.git
 WORKDIR /usr/src/app/isolate
@@ -21,6 +19,8 @@ RUN make isolate
 RUN make
 RUN make all
 RUN make install
+
+COPY . .
 
 EXPOSE 10000
 CMD [ "npm", "run", "start" ]
