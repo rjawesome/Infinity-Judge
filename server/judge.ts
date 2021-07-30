@@ -30,7 +30,7 @@ export const isolateDebug = async (
     if (lang === "py") {
       console.log("AT PYTHON")
       process = exec(
-        `isolate --env=HOME=/home/user -i ${inpName} --run /usr/bin/python3 ${progName}`,
+        `isolate --env=HOME=/home/user -i ${inpName} --mem 128000 --time 3 --run /usr/bin/python3 ${progName}`,
         (err, stdout, stderr) => {
           console.log("run output", stdout)
           console.log("run error", stderr)
@@ -38,7 +38,9 @@ export const isolateDebug = async (
       )
     }
     if (lang === "cpp") {
-      process = exec(`isolate --run ${progName} -i ${inpName}`)
+      process = exec(
+        `isolate --mem 128000 --time 1 --run ${progName} -i ${inpName}`
+      )
     }
     var output = "",
       error = ""

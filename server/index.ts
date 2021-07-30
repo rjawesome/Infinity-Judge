@@ -39,7 +39,7 @@ app.get("/", async (req, res) => {
   //console.log(files)
   res.json({
     files,
-    metadata: jsonData
+    metadata: jsonData,
   })
 })
 
@@ -71,14 +71,26 @@ app.post("/submit/:id", async (req, res) => {
   let correct = 0
 
   for (let i = 1; i <= tc_count; i++) {
-    if (fullResult[0][0] === "C") break
+    let error = false
+    if (fullResult[0].substring(0, 4) === "Comp") break
     const input = (await fs.readFile(`problems/${id}/t${i}.in`)).toString()
     const output = (await fs.readFile(`problems/${id}/t${i}.out`)).toString()
     const result = await getResult(code, lang, input).catch((e) => {
-      fullResult = ["Compilation Error ------ " + e]
+      console.log("THE THING IS", e.substring(0, 4), fullResult)
+      error = true
+      if (e.substring(0, 4) === "Time") {
+        //console.log("time case")
+        fullResult.push("TLE")
+      } else if (e.substring(0, 4) === "Comp") {
+        //console.log("comp case")
+        fullResult = ["Compilation Error ------ \\n" + e]
+      } else if (e.substring(0, 4) === "/bin") {
+        fullResult.push("MEM")
+        //console.log("after", fullResult)
+      }
     })
-    if (fullResult[0][0] === "C") break
-    fullResult.push(result == output ? "AC" : "WA")
+    if (fullResult[0].substring(0, 4) === "Comp") break
+    if (!error) fullResult.push(result == output ? "AC" : "WA")
     console.log("RESULT AND OUTPUT", result, output)
     if (result == output) correct++
   }
