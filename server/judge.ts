@@ -48,6 +48,7 @@ export const isolateDebug = async (
     process.stdout.on("data", (data) => (output += data))
     process.stderr.on("data", (data) => (error += data))
     process.on("close", (code) => {
+      //exec("isolate --cg --cleanup")
       if (code != 0) reject(error)
       else resolve(output)
     })
