@@ -114,3 +114,7 @@ a {
 .statement {
   margin: 20px 20px 20px 0px;
 }
+
+code {
+  background-color: green;
+}

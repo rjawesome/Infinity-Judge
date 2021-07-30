@@ -13,7 +13,6 @@ export const isolateDebug = async (
     console.log("STDERR", data.toString())
   })
 
-  exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
   exec(
     `cp programs/${progName} /var/local/lib/isolate/0/box/${progName}`,
     (err, stdout, stderr) => console.log("COPY ERROR", err)
@@ -56,7 +55,6 @@ export const isolateDebug = async (
 }
 
 export const runPythonIsolate = async (script: string, input: string) => {
-  exec("cd /mnt/c/Users/Rishi/Desktop/All/judge/server")
   const filename = uuid()
   try {
     await fs.writeFile(`programs/${filename}.py`, script)

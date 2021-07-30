@@ -61,42 +61,43 @@ app.post("/submit/:id", async (req, res) => {
   const { id } = req.params as { id: string }
 
   const user = await verifyUser(idToken)
-  let fullResult: string[] = ["?"]
+  let fullResult: string[] = []
   let tc_count = ((await fs.readdir(`problems/${id}/`)).length - 1) / 2
   if (lang === "cpp") {
     code = await compileCPP(code)
-    if (code[0] === ".") fullResult = ["Compilation Error ------- " + code]
+    if (code[0] === ".") {
+      res.json(["Compilation Error \n" + code])
+      return
+    }
   }
 
   let correct = 0
 
   for (let i = 1; i <= tc_count; i++) {
     let error = false
-    if (fullResult[0].substring(0, 4) === "Comp") break
+
     const input = (await fs.readFile(`problems/${id}/t${i}.in`)).toString()
     const output = (await fs.readFile(`problems/${id}/t${i}.out`)).toString()
+
     const result = await getResult(code, lang, input).catch((e) => {
       console.log("THE THING IS", e.substring(0, 4), fullResult)
       error = true
       if (e.substring(0, 4) === "Time") {
         //console.log("time case")
         fullResult.push("TLE")
-      } else if (e.substring(0, 4) === "Comp") {
-        //console.log("comp case")
-        fullResult = ["Compilation Error ------ \\n" + e]
       } else if (e.substring(0, 4) === "/bin") {
         fullResult.push("MEM")
         //console.log("after", fullResult)
+      } else {
+        fullResult.push("RTE")
       }
     })
-    if (fullResult[0].substring(0, 4) === "Comp") break
     if (!error) fullResult.push(result == output ? "AC" : "WA")
     console.log("RESULT AND OUTPUT", result, output)
-    if (result == output) correct++
+    if (result === output) correct++
   }
 
   await updateScore(user.uid, id, correct)
-  if (fullResult[0] == "?") fullResult.shift()
   res.json(fullResult)
 })
 

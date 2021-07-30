@@ -75,9 +75,8 @@ const Problem = () => {
             color="primary"
             variant="h5"
             className={classes.problemStatement}
-          >
-            {statement}
-          </Typography>
+            dangerouslySetInnerHTML={{ __html: statement }}
+          ></Typography>
           <Grid alignContent="center">
             <Paper elevation={0} style={paperStyle}>
               <TextField
