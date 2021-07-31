@@ -116,5 +116,21 @@ a {
 }
 
 code {
-  background-color: green;
+  font: monospace;
+  background-color: #efefef;
+  border: 1.5px #dddddd solid;
+  color: #a03737;
+  display: block;
+  padding: 4px;
+  margin-bottom: 5px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.code-box {
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+  padding: 4px;
+  margin: 0;
+  border: 1.5px #dddddd solid;
 }
