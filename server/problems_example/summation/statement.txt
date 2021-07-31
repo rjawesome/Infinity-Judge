@@ -1,1 +1,5 @@
 Given 2 integers, a and b seperated by space, output their sum (add a newline at the end)
+
+<h3>Example</h3>
+<code-box>Input</code-box><code>20 5</code><code-box>Output</code-box><code>25</code>
+<code-box>Input</code-box><code>-3 -4</code><code-box>Output</code-box><code>-7</code>

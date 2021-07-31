@@ -117,6 +117,7 @@ a {
 
 code {
   font: monospace;
+  display: block;
   background-color: #efefef;
   border: 1.5px #dddddd solid;
   color: #a03737;
@@ -127,7 +128,8 @@ code {
   border-bottom-right-radius: 2px;
 }
 
-.code-box {
+code-box {
+  display: block;
   border-top-left-radius: 1px;
   border-top-right-radius: 1px;
   padding: 4px;
