@@ -123,7 +123,7 @@ export const compileCPP = async (script: string) => {
     ])
   } catch (e) {
     console.log("COMPILE CPP ERROR HERE", e)
-    return e
+    return "CPP ERR" + e
   }
   console.log("yo")
   return filename
