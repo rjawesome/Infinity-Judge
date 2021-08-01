@@ -64,10 +64,10 @@ app.post("/submit/:id", async (req, res) => {
   let fullResult: string[] = []
   let tc_count = ((await fs.readdir(`problems/${id}/`)).length - 1) / 2
   if (lang === "cpp") {
-    code = await compileCPP(code)
-    if (code.substring(0, 7) === "CPP ERR") {
-      res.json(["Compilation Error \n" + code.substring(7)])
-      return
+    try {
+      code = await compileCPP(code)
+    } catch (e) {
+      return res.json(["Compilation Error: " + e])
     }
   }
 
