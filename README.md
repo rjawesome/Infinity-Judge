@@ -3,6 +3,7 @@
 ## ⚡ About The Project
 
 An open-source online judge for algorithmic coding problems.
+Check it out [here](https://judge.rohanj.dev/)
 
 ### Built With
 
