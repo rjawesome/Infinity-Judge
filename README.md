@@ -18,7 +18,9 @@ Check it out [here](https://judge.rohanj.dev/)
 
 ### In Action
 
-<img src="./static/in_action.png">
+<img src="./static/home.png">
+<img src="./static/problem.png">
+<img src="./static/result.png">
 
 ## 💻 Getting Started
 
@@ -49,13 +51,14 @@ Check it out [here](https://judge.rohanj.dev/)
 ## 🚀 Usage
 
 ```sh
-cd server
-npm start
-
-cd ..
-
 docker build . --tag [name]
 ./server/run.sh [name]
+
+cd ..
+cd client
+
+npm run build
+npm start
 ```
 
 ## 🔥 Coming Soon
