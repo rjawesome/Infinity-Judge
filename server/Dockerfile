@@ -20,6 +20,7 @@ RUN make
 RUN make all
 RUN make install
 
+WORKDIR /usr/src/app
 COPY . .
 
 EXPOSE 10000
