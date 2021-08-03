@@ -54,8 +54,8 @@ npm start
 
 cd ..
 
-cd client
-npm start
+docker build . --tag [name]
+./server/run.sh [name]
 ```
 
 ## 🔥 Coming Soon
