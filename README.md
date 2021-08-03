@@ -1,4 +1,4 @@
-# Online Judge
+# Infinity Judge
 
 ## ⚡ About The Project
 
