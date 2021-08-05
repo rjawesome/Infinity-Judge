@@ -50,15 +50,31 @@ Check it out [here](https://judge.rohanj.dev/)
 
 ## 🚀 Usage
 
+# Server:
+
 ```sh
+cd server
 docker build . --tag [name]
-./server/run.sh [name]
+./server/run.sh [name] #api runs on port 10000
+```
 
-cd ..
+# Client:
+
+1. edit client/.env with the api url
+```
+REACT_APP_SERVER_URL = http://localhost:10000/
+```
+
+2a. run the client dev server
+```sh
 cd client
+npm run start
+```
 
+2b. build client to html
+```sh
+cd client
 npm run build
-npm start
 ```
 
 ## 🔥 Coming Soon
