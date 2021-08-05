@@ -50,7 +50,7 @@ Check it out [here](https://judge.rohanj.dev/)
 
 ## 🚀 Usage
 
-# Server:
+### Server:
 
 ```sh
 cd server
@@ -58,7 +58,7 @@ docker build . --tag [name]
 ./server/run.sh [name] #api runs on port 10000
 ```
 
-# Client:
+### Client:
 
 1. edit client/.env with the api url
    ```
