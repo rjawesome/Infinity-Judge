@@ -66,7 +66,7 @@ Check it out [here](https://judge.rohanj.dev/)
    REACT_APP_SERVER_URL = http://localhost:10000/
    ```
 
-3. build client to html (serve files in client/build folder)
+2. build client to html (serve files in client/build folder)
    ```sh
    cd client
    npm run build
