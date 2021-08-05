@@ -1,5 +1,7 @@
 # Infinity Judge
 
+[![GitHub license](https://img.shields.io/github/license/rjawesome/Infinity-Judge?style=flat-square)](https://github.com/rjawesome/Infinity-Judge/blob/master/LICENSE) [![GitHub license](https://img.shields.io/github/contributors/rjawesome/Infinity-Judge?style=flat-square)](https://github.com/rjawesome/Infinity-Judge/contributors) [![GitHub forks](https://img.shields.io/github/stars/rjawesome/Infinity-Judge?style=flat-square)](https://github.com/rjawesome/Infinity-Judge/stargazers)
+
 ## ⚡ About The Project
 
 An open-source online judge for algorithmic coding problems.
@@ -47,6 +49,7 @@ Check it out [here](https://judge.rohanj.dev/)
 ### Server:
 
 1. build docker container
+
    ```sh
    cd server
    docker build . --tag [name]
@@ -60,6 +63,7 @@ Check it out [here](https://judge.rohanj.dev/)
 ### Client:
 
 1. edit client/.env with the api url
+
    ```
    REACT_APP_SERVER_URL = http://localhost:10000/
    ```
