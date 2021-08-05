@@ -38,12 +38,6 @@ Check it out [here](https://judge.rohanj.dev/)
 2. Install NPM packages
 
    ```sh
-   npm install
-   cd server
-   npm install
-
-   cd ..
-
    cd client
    npm install
    ```
@@ -52,10 +46,14 @@ Check it out [here](https://judge.rohanj.dev/)
 
 ### Server:
 
-1. run server in docker container
+1. build docker container
    ```sh
    cd server
    docker build . --tag [name]
+   ```
+
+2. run docker container
+   ```sh
    ./server/run.sh [name] #api runs on port 10000
    ```
 
