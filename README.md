@@ -61,21 +61,15 @@ docker build . --tag [name]
 # Client:
 
 1. edit client/.env with the api url
-```
-REACT_APP_SERVER_URL = http://localhost:10000/
-```
+   ```
+   REACT_APP_SERVER_URL = http://localhost:10000/
+   ```
 
-2a. run the client dev server
-```sh
-cd client
-npm run start
-```
-
-2b. build client to html
-```sh
-cd client
-npm run build
-```
+3. build client to html (serve files in client/build folder)
+   ```sh
+   cd client
+   npm run build
+   ```
 
 ## 🔥 Coming Soon
 
