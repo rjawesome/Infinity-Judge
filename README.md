@@ -52,11 +52,12 @@ Check it out [here](https://judge.rohanj.dev/)
 
 ### Server:
 
-```sh
-cd server
-docker build . --tag [name]
-./server/run.sh [name] #api runs on port 10000
-```
+1. run server in docker container
+   ```sh
+   cd server
+   docker build . --tag [name]
+   ./server/run.sh [name] #api runs on port 10000
+   ```
 
 ### Client:
 
