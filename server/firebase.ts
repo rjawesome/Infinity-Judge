@@ -21,5 +21,5 @@ export const updateScore = async (
   return await firestore
     .collection("users")
     .doc(uid)
-    .update({ [`problems.${problemId}`]: score })
+    .update({ [`problems.${problemId}`]: score, [`problems.${problemId}-timestamp`]: Date.now() })
 }
